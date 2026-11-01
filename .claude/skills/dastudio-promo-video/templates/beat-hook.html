@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- S1 — Flota hook. Mounted by ../index.html via data-composition-src. Local timeline 0-2.0s (60f@30fps). -->
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #0d1117;
+    }
+    .s1-panel {
+      position: absolute;
+      left: 56px;
+      top: 310px;
+      width: 968px;
+      height: 1150px;
+      border-radius: 16px;
+      border: 3px solid #30363d;
+      background: #161b22;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .s1-shot-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .s1-shot {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 33% 40%;
+      display: block;
+    }
+    .s1-chip {
+      position: absolute;
+      left: 50%;
+      top: 215px;
+      transform: translateX(-50%) scale(0.9);
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: 0.06em;
+      color: #f0f6fc;
+      white-space: nowrap;
+    }
+    .s1-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 56px;
+      height: 56px;
+      transform: translate(1150px, 1750px);
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
+    }
+    .s1-cursor path {
+      fill: #f0f6fc;
+      stroke: #0d1117;
+      stroke-width: 1.6;
+      stroke-linejoin: round;
+    }
+    .s1-ring {
+      position: absolute;
+      left: 656px;
+      top: 770px;
+      width: 24px;
+      height: 24px;
+      margin-left: -12px;
+      margin-top: -12px;
+      border-radius: 50%;
+      border: 4px solid #38bdf8;
+      opacity: 0;
+    }
+    .s1-iris {
+      position: absolute;
+      inset: 0;
+      background: #38bdf8;
+      clip-path: circle(0px at 656px 770px);
+    }
+  </style>
+
+  <div id="s1-flota" class="clip" data-composition-id="s1-flota" data-width="1080" data-height="1920" data-start="0" data-duration="2.0" data-track-kind="graphics">
+    <div class="s1-panel">
+      <div class="s1-shot-wrap" id="s1-shotwrap">
+        <img class="s1-shot" src="../assets/images/flota_1.png" alt="" />
+      </div>
+    </div>
+    <div class="s1-chip" id="s1-chip">GESTIÓN DE FLOTA · TIEMPO REAL</div>
+    <svg class="s1-cursor" id="s1-cursor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 3 L5 19 L9 15 L12 22 L15 20.5 L11.5 14 L18 14 Z" />
+    </svg>
+    <div class="s1-ring" id="s1-ring"></div>
+    <div class="s1-iris" id="s1-iris"></div>
+    <audio id="s1-click-sfx" class="clip" data-start="1.667" data-hf-media-start-basis="local" data-duration="0.37" data-volume="1.0" src="../assets/sfx/click.mp3"></audio>
+    <audio id="s1-whoosh-sfx" class="clip" data-start="1.9" data-hf-media-start-basis="local" data-duration="0.57" data-volume="0.98" src="../assets/sfx/whoosh-short.mp3"></audio>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var fps = 30;
+      var f = function (n) {
+        return n / fps;
+      };
+
+      // chip pops in, no fade: scale only
+      tl.fromTo(
+        "#s1-chip",
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: f(8), ease: "back.out(1.6)" },
+        f(6),
+      );
+
+      // slow settle on the real screenshot, stops exactly where the click push takes over
+      tl.fromTo(
+        "#s1-shotwrap",
+        { scale: 1.0 },
+        { scale: 1.015, duration: f(50), ease: "power1.inOut" },
+        0,
+      );
+
+      // cursor travels in from off-frame to the "Unidades" card
+      tl.to(
+        "#s1-cursor",
+        { x: 656 - 5, y: 770 - 19, duration: f(30), ease: "power4.out" },
+        f(14),
+      );
+
+      // click: ring pulse + arrow squash
+      tl.fromTo(
+        "#s1-ring",
+        { scale: 1, opacity: 1 },
+        { scale: 5.83, opacity: 0, duration: f(8), ease: "power2.out" },
+        f(50),
+      );
+      tl.to("#s1-cursor", { scale: 0.85, duration: f(2), ease: "power1.out" }, f(50));
+      tl.to("#s1-cursor", { scale: 1, duration: f(4), ease: "power1.out" }, f(52));
+
+      // panel push on the click
+      tl.to("#s1-shotwrap", { scale: 1.03, duration: f(8), ease: "power2.in" }, f(50));
+
+      // iris closes to sky from the click point, hands off to S2
+      tl.fromTo(
+        "#s1-iris",
+        { clipPath: "circle(0px at 656px 770px)" },
+        { clipPath: "circle(1400px at 656px 770px)", duration: f(8), ease: "power2.in" },
+        f(50),
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["s1-flota"] = tl;
+    })();
+  </script>
+</template>

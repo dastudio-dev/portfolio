@@ -1,0 +1,91 @@
+<!doctype html>
+<!-- S5 — Claim line. Local timeline 0-2.0s (60f@30fps). Starts clean (receives S4's dip-cut from the outside), exits on its own dip-cut into the end card. -->
+<template>
+  <style>
+    @font-face {
+      font-family: "Plus Jakarta Sans";
+      font-weight: 800;
+      font-style: normal;
+      src: url("../assets/fonts/PlusJakartaSans-800.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #0d1117;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+    .s5-wrap {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      top: 639px;
+      text-align: center;
+    }
+    .s5-line {
+      overflow: hidden;
+    }
+    .s5-line + .s5-line {
+      margin-top: 6px;
+    }
+    .s5-line-inner {
+      font-weight: 800;
+      font-size: 84px;
+      line-height: 104px;
+      letter-spacing: -0.02em;
+      color: #f0f6fc;
+      clip-path: inset(0 100% 0 0);
+    }
+    .s5-accent {
+      color: #38bdf8;
+    }
+    .s5-dip {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="s5-claim" class="clip" data-composition-id="s5-claim" data-width="1080" data-height="1920" data-start="0" data-duration="2.0" data-track-kind="graphics">
+    <div class="s5-wrap">
+      <div class="s5-line">
+        <div class="s5-line-inner" id="s5-line1">Software a medida</div>
+      </div>
+      <div class="s5-line">
+        <div class="s5-line-inner" id="s5-line2">que <span class="s5-accent">funciona.</span></div>
+      </div>
+    </div>
+    <div class="s5-dip" id="s5-dip"></div>
+    <audio id="s5-whoosh-sfx" class="clip" data-start="1.9" data-hf-media-start-basis="local" data-duration="0.57" data-volume="0.91" src="../assets/sfx/whoosh-short.mp3"></audio>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var fps = 30;
+      var f = function (n) {
+        return n / fps;
+      };
+
+      tl.fromTo(
+        "#s5-line1",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: f(10), ease: "power2.out" },
+        0,
+      );
+      tl.fromTo(
+        "#s5-line2",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: f(10), ease: "power2.out" },
+        f(14),
+      );
+
+      // dip-cut out, into the end card
+      tl.to("#s5-dip", { opacity: 0.55, duration: f(3), ease: "power1.in" }, f(57));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["s5-claim"] = tl;
+    })();
+  </script>
+</template>

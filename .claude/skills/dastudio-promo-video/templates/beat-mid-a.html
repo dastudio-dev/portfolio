@@ -1,0 +1,160 @@
+<!doctype html>
+<!-- S2 — Herramientas (e-commerce). Local timeline 0-2.3333s (70f@30fps). Entry iris inherited from S1's click at (656,672); exits on its own click at (540,819). -->
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #0d1117;
+    }
+    .s2-panel {
+      position: absolute;
+      left: 56px;
+      top: 310px;
+      width: 968px;
+      height: 1150px;
+      border-radius: 16px;
+      border: 3px solid #30363d;
+      background: #161b22;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .s2-shot-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .s2-shot {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 18% 50%;
+      display: block;
+    }
+    .s2-chip {
+      position: absolute;
+      left: 50%;
+      top: 215px;
+      transform: translateX(-50%) scale(0.9);
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: 0.06em;
+      color: #f0f6fc;
+      white-space: nowrap;
+      opacity: 0;
+    }
+    .s2-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 56px;
+      height: 56px;
+      transform: translate(-100px, 900px);
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
+    }
+    .s2-cursor path {
+      fill: #f0f6fc;
+      stroke: #0d1117;
+      stroke-width: 1.6;
+      stroke-linejoin: round;
+    }
+    .s2-ring {
+      position: absolute;
+      left: 540px;
+      top: 943px;
+      width: 24px;
+      height: 24px;
+      margin-left: -12px;
+      margin-top: -12px;
+      border-radius: 50%;
+      border: 4px solid #38bdf8;
+      opacity: 0;
+    }
+    .s2-iris-in {
+      position: absolute;
+      inset: 0;
+      background: #38bdf8;
+      clip-path: circle(1400px at 656px 770px);
+    }
+    .s2-iris-out {
+      position: absolute;
+      inset: 0;
+      background: #38bdf8;
+      clip-path: circle(0px at 540px 943px);
+    }
+  </style>
+
+  <div id="s2-herramientas" class="clip" data-composition-id="s2-herramientas" data-width="1080" data-height="1920" data-start="0" data-duration="2.3333" data-track-kind="graphics">
+    <div class="s2-panel">
+      <div class="s2-shot-wrap" id="s2-shotwrap">
+        <img class="s2-shot" src="../assets/images/herramientas_1.png" alt="" />
+      </div>
+    </div>
+    <div class="s2-chip" id="s2-chip">E-COMMERCE · PAGOS ONLINE</div>
+    <svg class="s2-cursor" id="s2-cursor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 3 L5 19 L9 15 L12 22 L15 20.5 L11.5 14 L18 14 Z" />
+    </svg>
+    <div class="s2-ring" id="s2-ring"></div>
+    <div class="s2-iris-in" id="s2-iris-in"></div>
+    <div class="s2-iris-out" id="s2-iris-out"></div>
+    <audio id="s2-click-sfx" class="clip" data-start="2.067" data-hf-media-start-basis="local" data-duration="0.37" data-volume="1.0" src="../assets/sfx/click.mp3"></audio>
+    <audio id="s2-whoosh-sfx" class="clip" data-start="2.233" data-hf-media-start-basis="local" data-duration="0.57" data-volume="0.98" src="../assets/sfx/whoosh-short.mp3"></audio>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var fps = 30;
+      var f = function (n) {
+        return n / fps;
+      };
+
+      // arrives slightly large and settles — the cut grammar
+      tl.fromTo("#s2-shotwrap", { scale: 1.04 }, { scale: 1.0, duration: f(8), ease: "power2.out" }, 0);
+
+      // entry iris opens from the inherited click point, revealing the new world
+      tl.fromTo(
+        "#s2-iris-in",
+        { clipPath: "circle(1400px at 656px 770px)" },
+        { clipPath: "circle(0px at 656px 770px)", duration: f(5), ease: "power2.out" },
+        0,
+      );
+
+      tl.fromTo(
+        "#s2-chip",
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: f(8), ease: "back.out(1.6)" },
+        f(6),
+      );
+
+      tl.to("#s2-cursor", { x: 540 - 5, y: 943 - 19, duration: f(32), ease: "power4.out" }, f(16));
+
+      tl.fromTo(
+        "#s2-ring",
+        { scale: 1, opacity: 1 },
+        { scale: 5.83, opacity: 0, duration: f(8), ease: "power2.out" },
+        f(62),
+      );
+      tl.to("#s2-cursor", { scale: 0.85, duration: f(2), ease: "power1.out" }, f(62));
+      tl.to("#s2-cursor", { scale: 1, duration: f(4), ease: "power1.out" }, f(64));
+
+      tl.to("#s2-shotwrap", { scale: 1.03, duration: f(8), ease: "power2.in" }, f(62));
+
+      tl.fromTo(
+        "#s2-iris-out",
+        { clipPath: "circle(0px at 540px 943px)" },
+        { clipPath: "circle(1400px at 540px 943px)", duration: f(8), ease: "power2.in" },
+        f(62),
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["s2-herramientas"] = tl;
+    })();
+  </script>
+</template>

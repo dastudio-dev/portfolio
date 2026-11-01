@@ -1,0 +1,112 @@
+<!doctype html>
+<!-- S4 — NeoMonitor (payoff). Local timeline 0-2.5s (75f@30fps). Entry iris inherited from S3's click at (540,1044). Exits via dip-cut (no click), into the claim. -->
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #0d1117;
+    }
+    .s4-panel {
+      position: absolute;
+      left: 56px;
+      top: 310px;
+      width: 968px;
+      height: 1150px;
+      border-radius: 16px;
+      border: 3px solid #30363d;
+      background: #161b22;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .s4-shot-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .s4-shot {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 100% 50%;
+      display: block;
+    }
+    .s4-chip {
+      position: absolute;
+      left: 50%;
+      top: 215px;
+      transform: translateX(-50%) scale(0.9);
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: 0.06em;
+      color: #f0f6fc;
+      white-space: nowrap;
+      opacity: 0;
+    }
+    .s4-iris-in {
+      position: absolute;
+      inset: 0;
+      background: #38bdf8;
+      clip-path: circle(1400px at 540px 1207px);
+    }
+    .s4-dip {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="s4-neomonitor" class="clip" data-composition-id="s4-neomonitor" data-width="1080" data-height="1920" data-start="0" data-duration="2.5" data-track-kind="graphics">
+    <div class="s4-panel">
+      <div class="s4-shot-wrap" id="s4-shotwrap">
+        <img class="s4-shot" src="../assets/images/neomonitor_1.png" alt="" />
+      </div>
+    </div>
+    <div class="s4-chip" id="s4-chip">SIMULACIÓN EN TIEMPO REAL</div>
+    <div class="s4-iris-in" id="s4-iris-in"></div>
+    <div class="s4-dip" id="s4-dip"></div>
+    <audio id="s4-whoosh-sfx" class="clip" data-start="2.4" data-hf-media-start-basis="local" data-duration="0.57" data-volume="0.91" src="../assets/sfx/whoosh.mp3"></audio>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var fps = 30;
+      var f = function (n) {
+        return n / fps;
+      };
+
+      tl.fromTo("#s4-shotwrap", { scale: 1.06 }, { scale: 1.0, duration: f(10), ease: "power2.out" }, 0);
+
+      tl.fromTo(
+        "#s4-iris-in",
+        { clipPath: "circle(1400px at 540px 1207px)" },
+        { clipPath: "circle(0px at 540px 1207px)", duration: f(6), ease: "power2.out" },
+        0,
+      );
+
+      tl.fromTo(
+        "#s4-chip",
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: f(8), ease: "back.out(1.6)" },
+        f(6),
+      );
+
+      // the payoff: one continuous slow push, nothing else moves, the UI just lives
+      tl.to("#s4-shotwrap", { scale: 1.04, duration: f(61), ease: "power2.inOut" }, f(10));
+
+      // dip-cut out
+      tl.to("#s4-dip", { opacity: 0.6, duration: f(3), ease: "power1.in" }, f(72));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["s4-neomonitor"] = tl;
+    })();
+  </script>
+</template>

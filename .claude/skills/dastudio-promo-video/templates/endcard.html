@@ -1,0 +1,171 @@
+<!doctype html>
+<!-- S6 — End card. Local timeline 0-4.0s (120f@30fps). Starts clean (receives S5's dip-cut from the outside). Mark performed via clip-path reveals, never faded in; held static from f94 (local) to the end. -->
+<template>
+  <style>
+    @font-face {
+      font-family: "Plus Jakarta Sans";
+      font-weight: 800;
+      font-style: normal;
+      src: url("../assets/fonts/PlusJakartaSans-800.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #0d1117;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+    .s6-lockup {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .s6-mark-wrap {
+      width: 96px;
+      height: 96px;
+      overflow: hidden;
+    }
+    .s6-mark {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      clip-path: inset(0px 0px 96px 0px);
+    }
+    .s6-word-wrap {
+      overflow: hidden;
+    }
+    .s6-word {
+      font-weight: 800;
+      font-size: 72px;
+      letter-spacing: -0.02em;
+      color: #f0f6fc;
+      clip-path: inset(0 100% 0 0);
+      white-space: nowrap;
+    }
+    .s6-tagline-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 696px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .s6-tagline {
+      display: inline-block;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 30px;
+      letter-spacing: 0.02em;
+      color: #8b949e;
+      clip-path: inset(0 100% 0 0);
+    }
+    .s6-cta {
+      position: absolute;
+      left: 50%;
+      top: 788px;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #161b22;
+      border: 2px solid #30363d;
+      border-radius: 999px;
+      padding: 20px 36px;
+      white-space: nowrap;
+    }
+    .s6-ig {
+      width: 34px;
+      height: 34px;
+      flex: none;
+    }
+    .s6-ig path,
+    .s6-ig rect,
+    .s6-ig line {
+      stroke: #38bdf8;
+    }
+    .s6-cta-text {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 700;
+      font-size: 36px;
+      color: #f0f6fc;
+    }
+  </style>
+
+  <div id="s6-endcard" class="clip" data-composition-id="s6-endcard" data-width="1080" data-height="1920" data-start="0" data-duration="4.0" data-track-kind="graphics">
+    <div class="s6-lockup">
+      <div class="s6-mark-wrap">
+        <img class="s6-mark" id="s6-mark" src="../assets/images/logo-icon.png" alt="" />
+      </div>
+      <div class="s6-word-wrap">
+        <div class="s6-word" id="s6-word">DAStudio</div>
+      </div>
+    </div>
+    <div class="s6-tagline-wrap">
+      <div class="s6-tagline" id="s6-tagline">Desarrollo Web &amp; Software a Medida</div>
+    </div>
+    <div class="s6-cta" id="s6-cta">
+      <svg class="s6-ig" viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+      <span class="s6-cta-text">Seguinos @dastudioweb</span>
+    </div>
+    <audio id="s6-pop-sfx" class="clip" data-start="1.667" data-hf-media-start-basis="local" data-duration="0.72" data-volume="0.91" src="../assets/sfx/pop.mp3"></audio>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var fps = 30;
+      var f = function (n) {
+        return n / fps;
+      };
+
+      gsap.set("#s6-cta", { xPercent: -50, scale: 0.85, opacity: 0 });
+
+      // mark performed: a fill rises bottom to top
+      tl.fromTo(
+        "#s6-mark",
+        { clipPath: "inset(0px 0px 96px 0px)" },
+        { clipPath: "inset(0px 0px 0px 0px)", duration: f(12), ease: "power2.out" },
+        f(8),
+      );
+
+      // wordmark wipes in beside it
+      tl.fromTo(
+        "#s6-word",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: f(10), ease: "power2.out" },
+        f(18),
+      );
+
+      // tagline wipes in below
+      tl.fromTo(
+        "#s6-tagline",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: f(14), ease: "power2.out" },
+        f(30),
+      );
+
+      // CTA pops in
+      tl.to(
+        "#s6-cta",
+        { scale: 1, opacity: 1, duration: f(10), ease: "back.out(1.4)" },
+        f(50),
+      );
+
+      // the one hold-attention pulse, finished well before the last frames
+      tl.to("#s6-cta", { scale: 1.015, duration: f(12), ease: "power2.inOut" }, f(70));
+      tl.to("#s6-cta", { scale: 1.0, duration: f(12), ease: "power2.inOut" }, f(82));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["s6-endcard"] = tl;
+    })();
+  </script>
+</template>

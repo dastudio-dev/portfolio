@@ -1,0 +1,150 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"color-ground","type":"color","label":"Fondo","default":"#0d1117"},
+    {"id":"color-ink","type":"color","label":"Texto","default":"#f0f6fc"},
+    {"id":"color-accent","type":"color","label":"Acento","default":"#38bdf8"},
+    {"id":"font-display","type":"string","label":"Tipografía display","default":"Plus Jakarta Sans"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --color-ground: #0d1117;
+        --color-ink: #f0f6fc;
+        --color-accent: #38bdf8;
+        --font-display: "Plus Jakarta Sans";
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--color-ground);
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        background: var(--color-ground);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-qv3y"
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div data-hf-id="hf-zhw9"
+        id="s1-flota"
+        data-composition-id="s1-flota"
+        data-composition-src="compositions/beat1.html"
+        data-start="0"
+        data-duration="2.0"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div data-hf-id="hf-6k1v"
+        id="s2-herramientas"
+        data-composition-id="s2-herramientas"
+        data-composition-src="compositions/beat2.html"
+        data-start="2.0"
+        data-duration="2.3333"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div data-hf-id="hf-xu1v"
+        id="s3-neocalcu"
+        data-composition-id="s3-neocalcu"
+        data-composition-src="compositions/beat3.html"
+        data-start="4.3333"
+        data-duration="2.1667"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div data-hf-id="hf-wadc"
+        id="s4-neomonitor"
+        data-composition-id="s4-neomonitor"
+        data-composition-src="compositions/beat4.html"
+        data-start="6.5"
+        data-duration="2.5"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div data-hf-id="hf-etuq"
+        id="s5-claim"
+        data-composition-id="s5-claim"
+        data-composition-src="compositions/claim.html"
+        data-start="9.0"
+        data-duration="2.0"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div data-hf-id="hf-83u9"
+        id="s6-endcard"
+        data-composition-id="s6-endcard"
+        data-composition-src="compositions/endcard.html"
+        data-start="11.0"
+        data-duration="4.0"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+      <audio data-hf-id="hf-js55"
+        id="bgm"
+        class="clip"
+        data-start="0"
+        data-duration="15"
+        data-track-index="1"
+        data-timeline-role="music"
+        data-volume="0.72"
+        src="assets/bgm/track-15s.mp3"
+      ></audio>
+
+      <audio data-hf-id="hf-2tp1"
+        id="riser"
+        class="clip"
+        data-start="1.24"
+        data-duration="10.03"
+        data-track-index="2"
+        data-volume="0.39"
+        src="assets/sfx/riser.mp3"
+      ></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
