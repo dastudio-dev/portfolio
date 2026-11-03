@@ -1,0 +1,69 @@
+<!-- compositions/outro.html -->
+<template>
+  <style>
+    #root { position:absolute; inset:0; overflow:hidden; background:var(--ground,#0d1117);
+      font-family:var(--font-display,"Plus Jakarta Sans",sans-serif); color:var(--fg,#f8fafc); }
+    .wipe { position:absolute; top:0; bottom:0; left:0; width:1100px; background:var(--surface,#161b22); z-index:50; }
+    .wipe::after { content:""; position:absolute; top:0; bottom:0; right:0; width:14px; background:var(--brand,#38bdf8); }
+    .mono { font-family:var(--font-mono,"JetBrains Mono",monospace); }
+    .ghost { position:absolute; left:40px; bottom:-60px; font-size:760px; font-weight:800; line-height:1; letter-spacing:-0.04em;
+      color:transparent; -webkit-text-stroke:3px rgba(56,189,248,0.16); z-index:1; }
+    .tag { position:absolute; left:70px; top:200px; font-size:30px; letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--brand,#38bdf8); z-index:5; }
+    .tag b { color:var(--fg,#f8fafc); font-weight:700; }
+
+    .l1 { position:absolute; left:70px; right:70px; top:330px; font-size:112px; font-weight:800; letter-spacing:-0.03em; line-height:1.02; }
+    .l2 { position:absolute; left:70px; right:70px; top:470px; font-size:112px; font-weight:800; letter-spacing:-0.03em; line-height:1.02; color:var(--brand,#38bdf8); }
+    .kinds { position:absolute; left:70px; right:70px; top:900px; display:flex; flex-wrap:wrap; gap:16px; }
+    .k { font-size:34px; font-weight:600; padding:16px 28px; border:2px solid var(--brand,#38bdf8); border-radius:999px; background:#10253a; }
+    .brand { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:120px; }
+    .brand img { width:180px; height:auto; display:block; }
+    .word { margin-top:34px; font-size:96px; font-weight:800; letter-spacing:-0.02em; }
+    .word span { color:var(--brand,#38bdf8); }
+    .tagl { margin-top:22px; font-size:40px; font-weight:500; color:#9aa4b2; text-align:center; padding:0 70px; }
+    .cta { margin-top:52px; font-size:30px; letter-spacing:0.1em; text-transform:uppercase; color:var(--brand,#38bdf8);
+      border:2px solid var(--border,#30363d); border-radius:999px; padding:18px 36px; }
+    .rule { position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg,transparent,var(--brand,#38bdf8),transparent); }
+  </style>
+  <div id="root" data-composition-id="outro" data-width="1080" data-height="1920">
+    <div id="outro-clip" class="clip" data-start="0" data-duration="5" data-track-index="0" style="position:absolute;inset:0">
+      <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="o-ghost" style="font-size:560px;bottom:-30px">∞</div>
+      <div class="l1" id="o-l1"><span class="w" style="display:inline-block">Cinco</span> <span class="w" style="display:inline-block">rubros.</span></div>
+      <div class="l2" id="o-l2"><span class="w" style="display:inline-block">Tu</span> <span class="w" style="display:inline-block">herramienta.</span></div>
+      <div class="kinds" id="o-kinds">
+        <span class="k mono">Sistemas de gestión</span><span class="k mono">E-commerce</span>
+        <span class="k mono">Apps clínicas</span><span class="k mono">Sitios corporativos</span>
+      </div>
+      <div class="brand" id="o-brand">
+        <img id="o-mark" src="assets/dastudio-mark.png" alt="DAStudio" />
+        <div class="word" id="o-word">DA<span>Studio</span></div>
+        <div class="tagl" id="o-tag">Desarrollo Web &amp; Software a Medida</div>
+        <div class="cta mono" id="o-cta" data-hold="true">Más proyectos en el portfolio</div>
+      </div>
+      <div class="rule" data-layout-ignore></div>
+      <div class="wipe" id="o-wipe" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      gsap.set("#o-brand", { opacity: 0 });
+      gsap.set("#o-l1 .w, #o-l2 .w", { opacity: 0, filter: "blur(12px)", y: 24 });
+      gsap.set("#o-ghost", { opacity: 0, scale: 0.9 });
+      gsap.set("#o-kinds .k", { opacity: 0, y: 30 });
+      tl.to("#o-wipe", { x: 1180, duration: 0.4, ease: "power3.inOut" }, 0);
+      tl.to("#o-ghost", { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" }, 0.3);
+      tl.to("#o-l1 .w", { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.35, ease: "power3.out", stagger: 0.09 }, 0.35);
+      tl.to("#o-l2 .w", { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.35, ease: "power3.out", stagger: 0.09 }, 0.7);
+      tl.to("#o-kinds .k", { opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.4)", stagger: 0.12 }, 1.0);
+      tl.to(["#o-l1", "#o-l2", "#o-ghost", "#o-kinds"], { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, 1.95);
+      tl.fromTo("#o-brand", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 2.1);
+      tl.fromTo("#o-mark", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 2.1);
+      tl.fromTo("#o-word", { opacity: 0, y: 20, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 2.3);
+      tl.fromTo("#o-tag", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.55);
+      tl.fromTo("#o-cta", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.8);
+      tl.seek(0);
+      window.__timelines["outro"] = tl;
+    })();
+  </script>
+</template>
