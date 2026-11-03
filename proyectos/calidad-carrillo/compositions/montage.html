@@ -1,0 +1,110 @@
+<!-- compositions/montage.html -->
+<template>
+  <style>
+    #root { position:absolute; inset:0; overflow:hidden; background:var(--ground,#0d1117);
+      font-family:var(--font-display,"Plus Jakarta Sans",sans-serif); color:var(--fg,#f8fafc); }
+    .wipe { position:absolute; top:0; bottom:0; left:0; width:1100px; background:var(--surface,#161b22); z-index:50; }
+    .wipe::after { content:""; position:absolute; top:0; bottom:0; right:0; width:14px; background:var(--brand,#38bdf8); }
+    .mono { font-family:var(--font-mono,"JetBrains Mono",monospace); }
+    .ghost { position:absolute; left:40px; bottom:-60px; font-size:760px; font-weight:800; line-height:1; letter-spacing:-0.04em;
+      color:transparent; -webkit-text-stroke:3px rgba(56,189,248,0.16); z-index:1; }
+    .tag { position:absolute; left:70px; top:200px; font-size:30px; letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--brand,#38bdf8); z-index:5; }
+    .tag b { color:var(--fg,#f8fafc); font-weight:700; }
+
+    .card { position:absolute; inset:0; opacity:0; }
+    .word { position:absolute; left:70px; right:40px; top:270px; font-size:150px; font-weight:800; letter-spacing:-0.035em; line-height:1; z-index:5; }
+    .desc { position:absolute; left:70px; right:80px; top:450px; font-size:50px; font-weight:600; color:#c9d1d9; line-height:1.15; z-index:5; }
+    .strip { position:absolute; left:0; right:0; top:490px; overflow:hidden; background:#f5f7f9; border-top:3px solid var(--brand,#38bdf8);
+      border-bottom:3px solid var(--border,#30363d); z-index:4; transform-origin:0 50%; }
+    .spin { position:absolute; left:0; top:0; width:1360px; transform-origin:0 0; }
+        .shl { position:absolute; border:4px solid var(--accent,#2563eb); border-radius:12px; box-shadow:0 0 0 5px rgba(37,99,235,0.2); transform-origin:0 50%; }
+    .list { position:absolute; left:70px; right:70px; top:700px; z-index:5; }
+    .it { font-size:84px; font-weight:700; letter-spacing:-0.02em; padding:30px 0; border-bottom:2px solid var(--border,#30363d); display:flex; align-items:center; }
+    .it span { width:24px; height:24px; border-radius:6px; background:var(--brand,#38bdf8); margin-right:28px; flex:0 0 auto; }
+  </style>
+  <div id="root" data-composition-id="montage" data-width="1080" data-height="1920">
+    <div id="montage-clip" class="clip" data-start="0" data-duration="5.0" data-track-index="0" style="position:absolute;inset:0">
+      <div class="card" id="m0"><div class="wipe" id="m0-wipe" data-layout-ignore></div>
+        <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="m0-g">02</div>
+        <div class="word" id="m0-w">Reuniones</div>
+        <div class="strip" id="m0-s" style="height:150px">
+          <div class="spin" id="m0-p" role="img" aria-label="REUNIONES" style="height:634px;background:url(assets/screens/inicio.png) 0 0/1360px auto no-repeat;transform:translate(0.0px,-112.0px) scale(2.0)">
+            <div class="shl" id="m0-h" style="left:424px;top:62px;width:102px;height:62px"></div>
+          </div>
+        </div>
+        <div class="list"><div class="it" id="m0-it0"><span></span>Agenda</div><div class="it" id="m0-it1"><span></span>Actas</div><div class="it" id="m0-it2"><span></span>Compromisos</div></div>
+      </div>
+      <div class="card" id="m1"><div class="wipe" id="m1-wipe" data-layout-ignore></div>
+        <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="m1-g">02</div>
+        <div class="word" id="m1-w">Formularios</div>
+        <div class="strip" id="m1-s" style="height:150px">
+          <div class="spin" id="m1-p" role="img" aria-label="FORMULARIOS" style="height:767px;background:url(assets/screens/clean-protocolos.png) 0 0/1360px auto no-repeat;transform:translate(-160.0px,-352.0px) scale(2.0)">
+            <div class="shl" id="m1-h" style="left:93px;top:190px;width:168px;height:48px"></div>
+          </div>
+        </div>
+        <div class="list"><div class="it" id="m1-it0"><span></span>Respuestas</div><div class="it" id="m1-it1"><span></span>QR propio</div><div class="it" id="m1-it2"><span></span>Export CSV</div></div>
+      </div>
+      <div class="card" id="m2"><div class="wipe" id="m2-wipe" data-layout-ignore></div>
+        <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="m2-g">02</div>
+        <div class="word" id="m2-w">Servicios</div>
+        <div class="strip" id="m2-s" style="height:150px">
+          <div class="spin" id="m2-p" role="img" aria-label="SERVICIOS" style="height:767px;background:url(assets/screens/clean-protocolos.png) 0 0/1360px auto no-repeat;transform:translate(-160.0px,-352.0px) scale(2.0)">
+            <div class="shl" id="m2-h" style="left:266px;top:190px;width:108px;height:48px"></div>
+          </div>
+        </div>
+        <div class="list"><div class="it" id="m2-it0"><span></span>Responsables</div><div class="it" id="m2-it1"><span></span>Correo</div><div class="it" id="m2-it2"><span></span>WhatsApp</div></div>
+      </div>
+      <div class="card" id="m3"><div class="wipe" id="m3-wipe" data-layout-ignore></div>
+        <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="m3-g">02</div>
+        <div class="word" id="m3-w">Backups</div>
+        <div class="strip" id="m3-s" style="height:150px">
+          <div class="spin" id="m3-p" role="img" aria-label="RESPALDO" style="height:767px;background:url(assets/screens/clean-protocolos.png) 0 0/1360px auto no-repeat;transform:translate(-600.0px,-352.0px) scale(2.0)">
+            <div class="shl" id="m3-h" style="left:618px;top:190px;width:196px;height:48px"></div>
+          </div>
+        </div>
+        <div class="list"><div class="it" id="m3-it0"><span></span>Excel</div><div class="it" id="m3-it1"><span></span>CSV</div><div class="it" id="m3-it2"><span></span>JSON</div></div>
+      </div>
+      <div class="tag mono" style="z-index:60"><b>SISTEMA 02</b> &nbsp;·&nbsp; CALIDAD DE ATENCIÓN</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      tl.set("#m0", { opacity: 1 }, 0.0);
+      tl.set("#m0", { opacity: 0 }, 1.249);
+      tl.fromTo("#m0-wipe", { x: 0 }, { x: 1180, duration: 0.3, ease: "power3.inOut" }, 0.0);
+      tl.fromTo("#m0-w", { x: -80, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.1);
+      tl.fromTo("#m0-s", { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.35, ease: "expo.out" }, 0.12);
+      tl.fromTo("#m0-h", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.3, ease: "power4.out" }, 0.4);
+      tl.fromTo("#m0-g", { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0.1);
+      tl.fromTo("#m0 .it", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.07 }, 0.3);
+      tl.set("#m1", { opacity: 1 }, 1.25);
+      tl.set("#m1", { opacity: 0 }, 2.499);
+      tl.fromTo("#m1-wipe", { x: 0 }, { x: 1180, duration: 0.3, ease: "power3.inOut" }, 1.25);
+      tl.fromTo("#m1-w", { x: -80, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 1.35);
+      tl.fromTo("#m1-s", { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.35, ease: "expo.out" }, 1.37);
+      tl.fromTo("#m1-h", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.3, ease: "power4.out" }, 1.65);
+      tl.fromTo("#m1-g", { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 1.35);
+      tl.fromTo("#m1 .it", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.07 }, 1.55);
+      tl.set("#m2", { opacity: 1 }, 2.5);
+      tl.set("#m2", { opacity: 0 }, 3.749);
+      tl.fromTo("#m2-wipe", { x: 0 }, { x: 1180, duration: 0.3, ease: "power3.inOut" }, 2.5);
+      tl.fromTo("#m2-w", { x: -80, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 2.6);
+      tl.fromTo("#m2-s", { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.35, ease: "expo.out" }, 2.62);
+      tl.fromTo("#m2-h", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.3, ease: "power4.out" }, 2.9);
+      tl.fromTo("#m2-g", { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 2.6);
+      tl.fromTo("#m2 .it", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.07 }, 2.8);
+      tl.set("#m3", { opacity: 1 }, 3.75);
+      tl.set("#m3", { opacity: 0 }, 4.999);
+      tl.fromTo("#m3-wipe", { x: 0 }, { x: 1180, duration: 0.3, ease: "power3.inOut" }, 3.75);
+      tl.fromTo("#m3-w", { x: -80, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 3.85);
+      tl.fromTo("#m3-s", { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.35, ease: "expo.out" }, 3.87);
+      tl.fromTo("#m3-h", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.3, ease: "power4.out" }, 4.15);
+      tl.fromTo("#m3-g", { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 3.85);
+      tl.fromTo("#m3 .it", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.07 }, 4.05);
+      tl.seek(0);
+      window.__timelines["montage"] = tl;
+    })();
+  </script>
+</template>

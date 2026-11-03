@@ -1,0 +1,71 @@
+<!-- compositions/f-qr.html -->
+<template>
+  <style>
+    #root { position:absolute; inset:0; overflow:hidden; background:var(--ground,#0d1117);
+      font-family:var(--font-display,"Plus Jakarta Sans",sans-serif); color:var(--fg,#f8fafc); }
+    .wipe { position:absolute; top:0; bottom:0; left:0; width:1100px; background:var(--surface,#161b22); z-index:50; }
+    .wipe::after { content:""; position:absolute; top:0; bottom:0; right:0; width:14px; background:var(--brand,#38bdf8); }
+    .mono { font-family:var(--font-mono,"JetBrains Mono",monospace); }
+    .ghost { position:absolute; left:40px; bottom:-60px; font-size:760px; font-weight:800; line-height:1; letter-spacing:-0.04em;
+      color:transparent; -webkit-text-stroke:3px rgba(56,189,248,0.16); z-index:1; }
+    .tag { position:absolute; left:70px; top:200px; font-size:30px; letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--brand,#38bdf8); z-index:5; }
+    .tag b { color:var(--fg,#f8fafc); font-weight:700; }
+
+    .title { position:absolute; left:70px; right:70px; top:255px; font-size:88px; font-weight:800; line-height:1.04;
+      letter-spacing:-0.025em; z-index:5; }
+    .band { position:absolute; left:0; right:0; top:480px; height:720px; overflow:hidden; background:#f5f7f9;
+      border-top:3px solid var(--brand,#38bdf8); border-bottom:3px solid var(--border,#30363d); z-index:4; }
+    .pan { position:absolute; left:0; top:0; width:1360px; transform-origin:0 0; }
+    .pan img { display:block; width:1360px; height:auto; }
+    .hl { position:absolute; left:473px; top:362px; width:414px; height:420px; border:5px solid var(--accent,#2563eb);
+      border-radius:14px; box-shadow:0 0 0 6px rgba(37,99,235,0.18); transform-origin:0 50%; }
+    .chips { position:absolute; left:70px; right:70px; top:1234px; display:flex; flex-wrap:wrap; gap:14px; z-index:5; }
+    .chip { font-size:30px; font-weight:600; padding:12px 22px; border:2px solid var(--border,#30363d); border-radius:999px;
+      background:var(--surface,#161b22); color:var(--fg,#f8fafc); }
+    .chip::before { content:""; display:inline-block; width:12px; height:12px; border-radius:50%; background:var(--brand,#38bdf8); margin-right:12px; }
+  </style>
+  <div id="root" data-composition-id="f-qr" data-width="1080" data-height="1920">
+    <div id="f-qr-clip" class="clip" data-start="0" data-duration="3.0" data-track-index="0" style="position:absolute;inset:0">
+      <div id="f-qr-ghost" class="ghost" data-layout-allow-overflow data-layout-allow-occlusion>01</div>
+      <div id="f-qr-tag" class="tag mono"><b>SISTEMA 01</b> &nbsp;·&nbsp; Eventos adversos</div>
+      <h2 id="f-qr-title" class="title"><span class="w" style="display:inline-block">Reportes</span> <span class="w" style="display:inline-block">anónimos</span> <span class="w" style="display:inline-block">con</span> <span class="w" style="display:inline-block">un</span> <span class="w" style="display:inline-block">QR</span></h2>
+      <div id="f-qr-band" class="band" data-hold="true">
+        <div id="f-qr-pan" class="pan" data-layout-allow-overflow>
+          <img src="assets/screens/qr.png" alt="Eventos adversos" />
+          <div id="f-qr-hl" class="hl" data-layout-allow-overflow></div>
+        </div>
+      </div>
+      <div id="f-qr-chips" class="chips"><span class="chip mono">Sin usuario</span><span class="chip mono">Sin datos de pacientes</span><span class="chip mono">100% anónimo</span></div>
+      <div id="f-qr-wipe" class="wipe" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var $ = function (s) { return document.querySelector(s); };
+      var S = 1.56;
+      gsap.set("#f-qr-pan", { scale: S * 1.14, x: -(320 * S * 1.14) , y: -(210 * S * 1.14) });
+      gsap.set("#f-qr-band", { clipPath: "inset(50% 0% 50% 0%)" });
+      gsap.set("#f-qr-title .w", { opacity: 0, filter: "blur(10px)", y: 18 });
+      gsap.set("#f-qr-tag", { opacity: 0, x: -40 });
+      gsap.set("#f-qr-ghost", { opacity: 0, y: 120 });
+      gsap.set("#f-qr-hl", { opacity: 0, scaleX: 0.2 });
+      gsap.set("#f-qr-chips .chip", { opacity: 0, y: 40, scale: 0.9 });
+
+      // cortina que descubre la escena (cubre el corte)
+      tl.to("#f-qr-wipe", { x: 1180, duration: 0.42, ease: "power3.inOut" }, 0);
+      tl.to("#f-qr-band", { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "expo.out" }, 0.18);
+      // paneo + zoom que se asienta sobre la captura real
+      tl.to("#f-qr-pan", { scale: S, x: -(330 * S), y: -(290 * S), duration: 2.8, ease: "power2.out" }, 0.18);
+      tl.to("#f-qr-tag", { opacity: 1, x: 0, duration: 0.35, ease: "expo.out" }, 0.3);
+      tl.to("#f-qr-title .w", { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.35, ease: "power3.out", stagger: 0.07 }, 0.35);
+      tl.to("#f-qr-ghost", { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" }, 0.3);
+      tl.to("#f-qr-hl", { opacity: 1, scaleX: 1, duration: 0.4, ease: "power4.out" }, 1.05);
+      tl.to("#f-qr-chips .chip", { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.5)", stagger: 0.09 }, 0.95);
+
+      tl.seek(0);
+      window.__timelines["f-qr"] = tl;
+    })();
+  </script>
+</template>
