@@ -1,211 +1,217 @@
 ---
 name: portfolio-reel
-description: Build an Instagram Reel/Story (HyperFrames, vertical 1080x1920) for a DAStudio portfolio project from real screenshots, following this repo's branding rules. Use when asked to make, generate, or resume a reel/video for a project in proyectos/.
+description: Build an Instagram Reel (HyperFrames, vertical 1080x1920, ~25 s, with music) for a DAStudio portfolio project from real screenshots, following this repo's branding rules. Use when asked to make, generate, or resume a reel/video for a project in proyectos/.
 ---
 
 # Portfolio reel (DAStudio / HyperFrames)
 
 How this repo turns a project into a 1080x1920 HyperFrames video for Instagram, end to
-end: intake, getting real screenshots (including from a panel behind login, over a
-remote/no-browser CLI session), scrubbing them for privacy/brand before they become
-assets, the house visual template, environment quirks specific to this machine, and
-how to deliver a render that is deliberately not committed to git.
+end: intake, getting real screenshots (including from a panel behind login), scrubbing
+them for privacy/brand, the house visual template that Diego approved, environment
+quirks of this machine, and delivery of a render that is deliberately not committed.
 
-Read `/hyperframes` first for anything HyperFrames-specific this file doesn't cover
-(contract, work loop, `check`/`snapshot`/`render`). This file is the DAStudio-specific
-layer on top of it.
+Approved references (look at them before inventing anything): `proyectos/calidad-carrillo`
+(v3) and `proyectos/flota-firebase` (v1). Diego liked both: "es dinámico y entretenido".
+Read `/hyperframes` first for anything HyperFrames-specific this file doesn't cover.
+
+## 0. The message (get this wrong and the reel is rejected)
+
+The reel's focus is **what DAStudio can develop** (software a medida, of very different
+kinds). It is NOT "this product has N modules / N types of software" — Diego rejected a
+version that said "8 tipos de software" for that reason.
+
+- **Present the project by its real systems**, named the way Diego names them. Ask for
+  the names; don't invent them. Examples: calidad-carrillo = "Reporte de Eventos Adversos"
+  + "Gestión de Calidad de Atención"; flota-firebase = "Gestión de Flota" + "Gestión de
+  Proyectos de Obras Viales y de Arquitectura".
+- Hook says "Software a medida" + "Este caso, para <tipo de cliente>:" + the two system
+  cards. The outro carries the diversity idea: "Hoy, <el cliente>. Mañana, tu herramienta."
+  + chips of what DAStudio builds (sistemas de gestión, e-commerce, apps clínicas, sitios
+  corporativos — from `CLAUDE.md`'s project summary) + the brand.
+- Brand stays neutral (`DAStudio / Desarrollo Web & Software a Medida`).
 
 ## 1. Intake — always ask before building
 
-Before scaffolding or writing any composition, ask for (see
-`memory/feedback_hyperframes_intake.md` in the user's auto-memory, which also governs
-this):
+Ask (see `memory/feedback_hyperframes_intake.md`, which also governs this):
 
-1. **La web** — URL of the deployed site.
-2. **El repositorio** — the project's own repo (context, not just the public URL).
-3. **Duración** — never assume 15s/30s.
-4. **Audio** — music/voice/mute, and what kind.
-5. **Foco** — any specific feature/screen the person wants emphasized, or "recorrido
-   general" (a plain tour of the main screens).
+1. **Proyecto** (slug in `proyectos/`) and **la web** (URL deployed).
+2. **El repositorio** (context; `gh api repos/<owner>/<repo>/contents/CLAUDE.md -H
+   "Accept: application/vnd.github.raw"` reads private repos with the user's `gh`).
+3. **Duración** — default offered: 25 s. Never assume.
+4. **Audio** — "música dinámica" is the approved default.
+5. **Foco / sistemas** — which 1–2 systems to present and their names (§0).
+6. If it's behind a login: which browser is logged in (§2).
 
-A **caption for the post is not optional** — always write one and deliver it
-alongside the video, whether or not the person asked for it (§7).
+A **caption for the post is not optional** — always write `renders/caption.txt` and deliver
+it with the video (§7).
 
 ## 2. Getting real screenshots
 
-Per `CLAUDE.md`: **no invented mockups, ever** — only real screenshots of the
-production site.
+Per `CLAUDE.md`: **no invented mockups, ever** — only real screenshots of production.
 
-- **Public site**: `npx hyperframes capture <url> --json` (see `/hyperframes`
-  "From a website" guidance). Prefer this; it's a clean, scroll-stitched capture.
-- **Behind a login, and no browser-automation tool is connected in this session**
-  (true for a plain CLI/tmux session over SSH — check with `ToolSearch` for
-  `claude-in-chrome` / `Claude_Browser` tools before assuming): you cannot log in
-  and capture yourself. Ask the person to log in from their own browser, take
-  screenshots of the key screens, and get them to you:
-  - If they're on the **same machine** this session runs on: ask for the local
-    file path and `Read` it directly.
-  - If they're on a **different machine** (e.g. a Chromebook attached to a remote
-    tmux session on a desktop): don't suggest `scp`/terminal transfer first — it's
-    real friction for a non-technical path. Suggest **Google Drive**: ChromeOS
-    saves/uploads to Drive natively, and the Google Drive MCP connector
-    (`mcp__claude_ai_Google_Drive__*`) can search and download from the same session.
-    Ask for the folder link, `search_files` with `parentId = '<folder id from the
-    URL>'`, then `download_file_content` per file. Each file's `content` often
-    exceeds the single tool-result size limit — when it does, the result is saved
-    to a local `.txt` (JSON with a `content` field); extract and `base64 -d` it
-    with a shell one-liner instead of reading the saved file inline.
+- **Public site**: `npx hyperframes capture <url> --json` (scroll-stitched, clean).
+- **Behind a login, Chrome logged in by Diego** (tools `mcp__claude-in-chrome__*`, deferred:
+  load them in ONE `ToolSearch select:` call — `tabs_context_mcp`, `navigate`, `computer`,
+  `javascript_tool`, `find`, `browser_batch`, `tabs_close_mcp`). The built-in browser pane
+  is isolated and NOT logged in; use Chrome. Recipe that worked (flota-firebase):
+  1. `list_connected_browsers`, then `tabs_context_mcp{createIfEmpty:true}` and
+     `navigate` to the app. Wait ~3 s (SPA splash).
+  2. Get the route list cheaply instead of clicking menus:
+     `javascript_tool`: `[...document.querySelectorAll('a[href^="#/"]')].map(a=>a.textContent.trim()+' -> '+a.getAttribute('href'))`.
+  3. Viewport is fixed (~1368x647) and `resize_window` doesn't change it. For crisp text set
+     `document.body.style.zoom='1.3'`–`'1.45'` (zoom persists across hash navigation;
+     re-apply after full loads) and capture 2–3 scroll positions per screen.
+     **Scroll AFTER the zoom reflow**, and use real wheel scroll (`computer scroll`).
+  4. Every screenshot is already saved as a full-size JPEG under
+     `~/.claude/projects/<proj>/<session>/tool-results/mcp-claude-in-chrome-blob-*.jpg`
+     (the path is printed under the image). Copy the good ones to the scratchpad `raw/`
+     (NEVER into the repo: they contain real data until scrubbed, §3).
+  5. Keep `browser_batch` calls to ≤5–6 actions: a long batch dropped the connection and
+     lost its screenshots. Tools needing a `ref` can't be chained with the `find` that
+     produces it; use coordinates or a JS `click()` (`find` text must be exact).
+  6. When done: `document.body.style.zoom=''` and `tabs_close_mcp` the tab you opened.
+- **No browser tool connected** (plain CLI over SSH): ask the person to take screenshots
+  and send them (same machine → local path and `Read`; remote → Google Drive MCP
+  `search_files` + `download_file_content`; big `content` results land in a `.txt` JSON,
+  `base64 -d` it with a shell one-liner).
+
+**Choose screens that don't need heavy redaction.** Production data has real people and
+money. Prefer: dashboards with counters, machine/equipment lists (names like "Excavadora
+320", not plates), alert lists (rows for machines in hours), obra detail tabs (Fases,
+Materiales y Servicios, Resultados). Skip: operator lists, caja, facturación, registros
+tables with operator names. Pick obras with non-personal names (e.g. "Ruta Provincial N°96").
 
 ## 3. Scrub before using as an asset
 
-Real screenshots taken by a person routinely leak things the final brand voice (§4)
-must not show. Before copying anything into `proyectos/<slug>/assets/`:
+Originals stay in the scratchpad. Only scrubbed PNGs go to `proyectos/<slug>/assets/screens/`.
+Template: `templates/scrub_template.py` (edit `JOBS`, run with `python3 -I`).
 
-- **Crop the browser's own chrome** (tabs, address bar, bookmarks bar) if present —
-  keep only the actual page content. Sample a vertical pixel column with PIL to find
-  the exact row the real app's own header starts at; don't guess.
-- **Redact personal identifiers** — a logged-in user's email/name shown in the app's
-  own header, a browser link-hover tooltip revealing the real domain
-  (`https://thedomain.app/...`) at the bottom of the frame, etc. Technique: sample
-  the exact background color next to the text with PIL (`im.load()[x, y]`), then
-  draw a filled rectangle of that color over the region (`ImageDraw.rectangle`) —
-  it blends seamlessly. Do this for every screenshot that needs it; check each one.
-- No ImageMagick is installed on this machine; Pillow (`python3 -c "import PIL"`)
-  is available — use it directly, no install needed.
+- **Crop browser chrome** (tabs, address bar) if present — keep only page content. Sample a
+  pixel column with PIL to find where the app's own header starts; don't guess.
+- **Personal identifiers on a flat background** (an email, a person's name): sample the
+  adjacent bg color (`im.load()[x, y]`) and draw a filled rectangle of that color.
+- **Numbers, plates, costs on busy backgrounds, and anything you can't paint over**:
+  pixelate the box (`resize` down by ~14 with BILINEAR, then up with NEAREST) — it is
+  unreadable and reads as an intentional privacy blur. Default policy for client
+  production data: **pixelate money amounts (importes, costos, totales), license plates
+  and personal names**; keep structure (labels, charts, percentages, counters). Diego
+  confirmed "dejar pixelados". Don't reveal real amounts unless he says so.
+- **Check every output by eye** (build a contact sheet with PIL and `Read` it). Boxes sized
+  too large cut real names ("VOLVO (S…"); too small leave a plate legible. Re-run with
+  adjusted boxes.
+- No ImageMagick; Pillow is available.
 
 ## 4. House visual template (per `CLAUDE.md`)
 
 - **Palette**: `--ground:#0d1117` `--surface:#161b22` `--border:#30363d`
-  `--brand:#38bdf8` (sky) `--accent:#2563eb` (blue). No neon, no blurred radial
-  glows, no AI-template clichés (see HyperFrames' own `story.md` §8 banned list —
-  it agrees with this repo's rules).
-- **Fonts**: *Plus Jakarta Sans* (display/body) + *JetBrains Mono* (badges/mono).
-  JetBrains Mono is bundled by HyperFrames and resolves by name. Plus Jakarta Sans is
-  **not** bundled — download the weights you need as `@font-face` files:
-  ```bash
-  curl -s "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" -o /tmp/pjs.css
-  # then curl -sL each fonts.gstatic.com .ttf URL from that CSS into assets/fonts/
-  ```
-- **No exposed domains, ever** (except the two explicit exceptions listed in
-  `CLAUDE.md`). Build a browser-chrome frame (toolbar, 3 dots, centered pill) with a
-  **functional label** instead of the real URL — e.g. `🔒 Panel Interno`, matching
-  the style of `CLAUDE.md`'s own examples (`🔒 Panel de Gestión de Flota`,
-  `🛒 Tienda Online & Catálogo`). This repo's first reel (`calidad-carrillo`) hand-built
-  a fixed-pixel version of this frame rather than the HyperFrames registry's
-  `browser-device-stage` component, because the registry component's responsive
-  `cqmin` sizing is tuned for an arbitrary reusable mount box, not a known
-  1080x1920 layout — simpler to size it directly per scene. `catalog --query` it
-  again before repeating this choice in case a better-fit block exists by then.
-- **Brand mark**: reuse `img/logo-icon.png` from the repo root for the end card
-  (don't redraw it).
-- **Vertical safe zones** (`/hyperframes` `types/vertical.md`): nothing in the top
-  168px, keep all text/product inside the 168–1330px band, texture-only below 1330px.
+  `--brand:#38bdf8` `--accent:#2563eb`. No neon, no radial glows, no AI-template clichés.
+  Dim text on dark must stay ≥ ~#8b949e (contrast check fails below ~3:1).
+- **Fonts**: *Plus Jakarta Sans* (copy `assets/fonts/*.ttf` + `assets/dastudio-mark.png`
+  from an existing reel project; the `@font-face` block lives in that project's
+  `index.html`) + *JetBrains Mono* (bundled, resolves by name).
+- **No exposed domains, ever** (exceptions in `CLAUDE.md`). With full-width page-content
+  captures there is no URL bar, so nothing to hide; don't screenshot the tab strip. The
+  client's own logo inside the app header (e.g. JL) is fine.
+- **Brand mark**: `assets/dastudio-mark.png` for the end card (don't redraw it).
+- **Vertical safe zones** (`/hyperframes` `types/vertical.md`): nothing in the top 168 px;
+  text and the product inside 168–1330 px. The approved template lets the chips sit just
+  below the band (~1250–1310) and uses only decoration (ghost numeral) under that. Keep
+  new text out of the bottom ~400 px.
 
-## 5. Project structure
+## 5. Project structure and the approved mechanic
 
-One `hero.html` (title card: project's functional label, e.g.
-`🏥 Gestión de Calidad y Seguridad Hospitalaria`) → one scene per screen (device-chrome
-frame + real screenshot + big caption + step counter `N / total`) → `outro.html`
-(DAStudio mark + "Desarrollo Web & Software a Medida" + CTA). Generate the repeated
-per-screen scenes from one Python template (a `dict` per screen: id, image, caption,
-step) rather than hand-writing near-duplicate HTML files — faster and keeps them
-consistent. Size each screen's image container to that image's own aspect ratio
-(`container_width * img_h / img_w`) so `object-fit: cover` never crops real content
-off the edges — don't just pick one fixed height for every screen; screenshots taken
-by hand are rarely a consistent size.
+Scaffold: `npx --yes hyperframes@0.9.8 init <slug> --resolution portrait --tailwind
+--skip-skills` inside `proyectos/`, then `mkdir -p assets/screens assets/fonts` and copy
+`assets/fonts/*`, `assets/dastudio-mark.png` and the music from a previous reel project.
 
-The settle-then-hold treatment (device fades/rises in, sits still, fades out) is a
-sober baseline, not a ceiling — it's what the first reel (`calidad-carrillo`) used
-everywhere. Later reels can carry more motion per screen (a slow push-in on the
-device, the screenshot panning inside its frame, a sharper punch-in on one stat) —
-see `/hyperframes` `motion.md` for the vocabulary. Default to the plain settle+hold
-(it's correct and on-brand), but it's fine to offer more movement, and do it when the
-person asks for something livelier.
+**Generate everything from one script**: `templates/gen_reel.py` (copy it to the scratchpad,
+read its header docstring). It writes `compositions/*.html` and `index.html`, so a content
+change is an edit + re-run, not hand-editing near-duplicate HTML.
 
-Recurring `check` findings on this template, and the fix:
+Timeline (25 s at 120 BPM; every start/duration is a multiple of 0.5 s, i.e. on the beat):
 
-- `dead_stretch` on a screen's readable hold → add `data-hold="true"` on the element
-  that's deliberately still (the device frame), not a shorter hold.
-- `text_below_floor` → floor is 28px at 1080 width; bump the pill/caption font, don't
-  shrink the box.
-- `clipped_text` on the chrome pill → shorten the label text and/or widen the pill's
-  `max-width`, in that order.
-- `first_frame_empty` on the hero → don't fade the headline up from `opacity:0` at
-  t=0; set it visible from frame 0 and animate something else (a light blur-in is
-  fine, full invisibility is not — per `/hyperframes` "the hook": frame 0 is the
-  thumbnail).
+| Block | Time | What |
+| --- | --- | --- |
+| hero | 0–2.5 | "Software *a medida*" + "Este caso, para …:" + two system cards that light up on beats (0.7 s and 1.3 s). Frame 0 is already fully visible (no blur/opacity-0 on text). Ghost `</>` fills the lower area. |
+| feature × 5–6 | 2.5–19.5 | 2.5–3 s each. See below. |
+| outro | 19.5–25 | Phrase "Hoy, X. / Mañana, tu herramienta." + chips of what DAStudio builds (0–2.2 s), blur-swap to DAStudio mark + tagline + CTA, hold ≥ 2.5 s. |
+
+**Feature scene** (`feature(...)`): a dark ground; mono tag `SISTEMA 0N · <ÁREA>`; title in
+≤2 lines (88 px/800, per-word blur-in, ≤ 6–8 words); a **full-width band** (0–1080 px,
+720 px tall, white, brand top border) showing the real screenshot with a pan + zoom-settle
+(starts at scale ×1.14, settles to scale 1.2 while panning from `crop` to `pan_to`); a
+blue **highlight box** drawn on the key element (coordinates in screenshot px); 3 chips
+below (spring pop, staggered); a big outlined **ghost numeral** = system number (01/02)
+as decoration; a **wipe** panel (surface + brand edge) sweeping off at the start covers
+the cut. Screenshots are 1368 px wide (browser zoom 1.3–1.45); pick windows over dense
+content, never over blank white, and end the pan where the useful part is visible.
+
+Beat grid, motion vocabulary and ease choices follow `/hyperframes` `motion.md`: exits
+shorter than entrances, a landed title stays dead still, vary entrances (blur-in, wipe,
+clip-path reveal, spring pop).
+
+Recurring `check` findings and the fix:
+
+- `content_overlap` between two text blocks → a line wrapped to 2 lines (long Spanish
+  phrases do); move the next block down or shorten the text.
+- `line_unread` → a line is on screen < 0.5 s + 0.3 s/word. Shorten titles, or put a tag
+  that repeats across cards OUTSIDE the cards so it lives the whole block.
+- `text_below_floor` → 28 px floor at 1080 width (the `.n` label of the system cards is 30).
+- `text_occluded` / `canvas_overflow` on the ghost numeral → add
+  `data-layout-allow-overflow data-layout-allow-occlusion` to the ghost; add
+  `data-layout-allow-overflow` to the panned image and the highlight.
+- `dead_stretch` → `data-hold="true"` on the deliberately still element (the band).
+- Duplicated media nodes warning when the same PNG is used in several cards → use
+  `background-image` on a div instead of repeated `<img>`.
+- Contrast on dim "not yet lit" card text → brighter grey (#8b949e).
+- `first_frame_empty` on the hero → text visible from frame 0.
+
+After `check`: `npx --yes hyperframes@0.9.8 snapshot --at <t,...>` and read the contact
+sheet; look at each scene's start, mid-pan and end, plus the outro.
 
 ## 6. Environment quirks (this machine)
 
-- **No `sudo`**: can't `apt-get install ffmpeg`. A static ffmpeg build lives at
-  `/tmp/ffmpeg-static/ffmpeg-*-amd64-static/{ffmpeg,ffprobe}` (from
-  johnvansickle.com) — re-download it if a fresh session doesn't have it (`/tmp` is
-  not persistent across restarts). Point every `hyperframes` invocation at it with
-  env vars on **every single command** (not persisted — writing to `~/.bashrc` is
-  blocked by the auto-mode classifier as unauthorized persistence):
-  ```bash
-  export HYPERFRAMES_FFMPEG_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ffmpeg"
-  export HYPERFRAMES_FFPROBE_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ffprobe"
-  ```
-- **Music/voice/images via HeyGen catalog** (`media-use resolve`) needs the `heygen`
-  CLI, which isn't installed by default. Installing it means piping/running a
-  downloaded shell script, which the auto-mode classifier blocks for the agent
-  itself ("Code from External") even after you've read and verified the script is
-  legitimate. Ask the person to run it themselves with the `!` prefix:
-  ```
-  ! curl -fsSL https://static.heygen.ai/cli/install.sh | bash
-  ```
-  then `! npx hyperframes auth login --device` (not plain `auth login` — this is a
-  headless/remote terminal, so the browser-callback flow fails; `--device` gives a
-  code + URL the person opens on any device).
-- Installed `heygen` lands in `~/.local/bin`, not on `PATH` by default — add
-  `export PATH="$HOME/.local/bin:$PATH"` alongside the ffmpeg exports above.
-- Pick the music cut point deliberately: `npx hyperframes audio <file> --only
-  sections,onsets,moments --json` segments the track — if section A (the start) is a
-  slow build, start the bed from section B/C instead (`data-media-start`), per
-  `/hyperframes` `sound.md`.
+Run every `hyperframes` command with:
 
-## 7. Delivery — the render is not committed, and delivery method is not assumed
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+export HYPERFRAMES_FFMPEG_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ffmpeg"
+export HYPERFRAMES_FFPROBE_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ffprobe"
+```
 
-This repo's `.gitignore` excludes `proyectos/*/{node_modules,renders,.hyperframes,.media}/`
-— the rendered `.mp4` is a local artifact only, downloaded and posted manually (see
-`memory/project_hyperframes_reels_setup.md`). So after `npx hyperframes render`,
-**don't assume the person can just grab the file from the repo or via `scp`** —
-that's exactly the friction that led to using Drive for screenshot intake (§2).
+- **No `sudo`**: the static ffmpeg lives in `/tmp` (not persistent across restarts —
+  re-download from johnvansickle.com if missing). Writing to `~/.bashrc` is blocked.
+- **HeyGen is already set up** (`heygen` in `~/.local/bin`, signed in as Diego, plan Free,
+  `npx hyperframes auth status` to confirm). If it is ever missing, ask him to run
+  `! curl -fsSL https://static.heygen.ai/cli/install.sh | bash` and
+  `! npx hyperframes auth login --device` himself (the auto-mode classifier blocks the agent).
+- **Music**: `npx hyperframes media-use resolve --type bgm --intent "upbeat energetic modern
+  tech corporate electronic, driving rhythm, 120-128 BPM, no vocals, short punchy"
+  --project .` → copy `.media/audio/bgm/bgm_XXX.wav` to `assets/bgm.wav` (re-use the same
+  track across reels unless asked otherwise; the cached one is 120 BPM). Find the cut with
+  `npx hyperframes audio assets/bgm.wav --only sections,onsets,moments --json`; for this
+  track `data-media-start="10"` lands on a strong bar. `<audio id="bgm" class="clip"
+  data-start="0" data-duration="25" data-media-start="10" data-fade-in="0.2"
+  data-fade-out="1.6" src="assets/bgm.wav">`. Cut every 0.5 s (a beat) / 0.25 s.
+- Pin the CLI: `npx --yes hyperframes@0.9.8 …` (matches the project's `package.json`).
+- Render: `npx --yes hyperframes@0.9.8 render -o renders/<slug>_vN.mp4` takes ~1.5 min for
+  25 s (software GPU). Delete older versions in `renders/` once a new one is approved.
 
-**Ask, don't assume, how to deliver it** — once the render exists, ask where the
-person wants it (e.g. the same Drive folder the screenshots came from, if it'll fit;
-or propose the Artifact download page below) rather than defaulting silently to one
-path. Whatever the channel, **always write and deliver a caption** for the post
-alongside the video (§1) — generate it even if the person only asked for the video.
+## 7. Delivery
 
-- `mcp__claude_ai_Google_Drive__create_file` only takes **inline** `base64Content` —
-  there is no server-side fetch/upload-by-path option. A rendered reel (several MB)
-  is 3-4M+ base64 characters, which is far past what fits in a single tool call —
-  don't attempt it; it will blow the turn's output budget before finishing. Drive
-  works fine for the **caption** (plain text, trivial size) — `create_file` with
-  `parentId` set to the same folder the screenshots came from.
-- For the **video**, propose an Artifact download page instead. The plain
-  `<a href="...">` / long-press-to-save pattern does **not** reliably let a phone
-  browser save the file (confirmed: the person could play it but not download it) —
-  build it with the `downloads` capability instead:
-  1. Publish a small HTML page (`Artifact`, no `url` yet) with a `<video controls>`
-     preview and a "Descargar" `<button>` (not a link).
-  2. Republish the same `file_path` with `capabilities: {assets: {}, downloads: true}`
-     declared (the asset upload is refused until `assets` is declared on the live
-     version).
-  3. Upload the rendered `.mp4`: `Artifact` with that `url`, `asset: true`,
-     `file_path` pointing at the render (15MB/binary ceiling, comfortably fits a
-     ~30s 1080x1920 render). It returns a same-origin path like
-     `/_blob/<id>` — put that in the `<video src>` and keep it for the button's
-     fetch below.
-  4. Wire the button's `onclick` to: `claude.use("downloads")` → on click,
-     `fetch(blobPath).then(r => r.blob())` → `downloads.save({filename, data: blob})`
-     (mp4 is in the save allowlist). Handle `downloads` resolving `null` (fall back
-     to `window.open(blobPath)`) and a rejected `save` (e.g. `declined`) by
-     re-enabling the button with a hint to long-press the video as a last resort.
-     This is the part that actually lets a phone save the file — the earlier
-     plain-`<a>` version did not.
-  5. Share the resulting `claude.ai/artifact/...` link. It's private to the
-     publishing account by default (view it with `action: "open"` to sanity-check
-     it yourself before handing it over).
+`renders/` is gitignored (`proyectos/*/{node_modules,renders,.hyperframes,.media}/`): the
+mp4 and `caption.txt` are local artifacts, posted manually by Diego.
+
+- **In the Claude desktop app, send the video with `SendUserFile`** (display `render`) and
+  mention where `caption.txt` is (paste its text in the reply if he asks). This is the
+  default now; ask only if he wants another channel.
+- Write `renders/caption.txt` every time: hook line, the two systems with one line each,
+  "Hoy X, mañana tu herramienta", a CTA question, `DAStudio · Desarrollo Web & Software a
+  Medida`, 6–7 hashtags (#softwareamedida #desarrolloweb … + topic ones).
+- Fallbacks when the app can't attach files: Google Drive MCP `create_file` only takes
+  inline base64 (fine for the caption, impossible for the video), so for the video publish
+  an Artifact page with `capabilities: {assets: {}, downloads: true}`, upload the mp4 with
+  `asset: true`, and wire a **button** (not a link) to `claude.use("downloads")` →
+  `fetch(blobPath).then(r=>r.blob())` → `downloads.save({filename, data})`; handle a
+  `null`/declined result. A plain `<a href>` does not let phones save the file.
+- After approval: ask before committing (`proyectos/<slug>/` is untracked until then).
