@@ -1,0 +1,83 @@
+{
+  "typography": [
+    {
+      "role": "heading",
+      "fontFamily": "system-ui",
+      "fontSize": "20.8px",
+      "fontWeight": "700",
+      "lineHeight": "30.16px",
+      "letterSpacing": "normal",
+      "color": "#1D2733",
+      "sampleText": "Calidad Carrillo"
+    },
+    {
+      "role": "body",
+      "fontFamily": "system-ui",
+      "fontSize": "14.4px",
+      "fontWeight": "400",
+      "lineHeight": "20.88px",
+      "letterSpacing": "normal",
+      "color": "#5B6B7A",
+      "sampleText": "Herramientas de soporte al Comité de Calidad"
+    },
+    {
+      "role": "link",
+      "fontFamily": "system-ui",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "17.4px",
+      "letterSpacing": "normal",
+      "color": "#0F5C6E",
+      "sampleText": "Desarrollado por DAStudio"
+    }
+  ],
+  "spacing": {
+    "observed": [
+      6,
+      10,
+      14,
+      16
+    ],
+    "baseUnit": 8
+  },
+  "radius": [],
+  "shadows": [],
+  "buttons": [
+    {
+      "label": "Ingresar con Google",
+      "background": "#0F5C6E",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#FFFFFF",
+      "padding": "10px 14px",
+      "borderRadius": "8px",
+      "border": "1px solid rgb(15, 92, 110)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "45.1875px"
+    }
+  ],
+  "cards": [
+    {
+      "label": "card",
+      "background": "#FFFFFF",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1D2733",
+      "padding": "28px 20px",
+      "borderRadius": "10px",
+      "border": "1px solid rgb(217, 224, 230)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "187.141px"
+    }
+  ],
+  "nav": null,
+  "chips": [],
+  "statCells": [],
+  "tabs": [],
+  "backgrounds": [],
+  "glass": []
+}

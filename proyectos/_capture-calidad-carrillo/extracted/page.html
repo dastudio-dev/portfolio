@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<style media="">:root { --bg:#f4f6f8; --card:#fff; --ink:#1d2733; --muted:#5b6b7a; --brand:#0f5c6e; --brand-2:#e6f2f5; --line:#d9e0e6; --warn:#b45309; --bad:#b91c1c; --ok:#15803d; }
+* { box-sizing: border-box; }
+body { margin:0; font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; }
+/* El pie siempre al fondo: esto crece para ocupar el alto que sobre y empuja el pie hacia abajo, aunque el
+   contenido de la pantalla sea bajo. #app es el elemento que crece en todas las páginas (en index.html es el
+   <div id="app"> con header/nav/main adentro; en las públicas es el propio <main id="app">). */
+#app { flex:1 0 auto; }
+.cargando { text-align:center; margin-top:30vh; color:var(--muted); }
+header.top { background:var(--brand); color:#fff; padding:10px 16px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:5; }
+header.top .marca { flex:1; min-width:0; }
+header.top h1 { font-size:1.05rem; margin:0; }
+header.top .subtitulo { display:block; font-size:.68rem; font-weight:400; opacity:.85; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+header.top button { background:transparent; color:#fff; border:1px solid #ffffff80; }
+nav.tabs { display:flex; gap:4px; overflow-x:auto; background:#fff; border-bottom:1px solid var(--line); padding:0 8px; }
+nav.tabs a { padding:12px 14px; color:var(--muted); text-decoration:none; white-space:nowrap; border-bottom:3px solid transparent; }
+nav.tabs a.on { color:var(--brand); border-color:var(--brand); font-weight:600; }
+main { max-width:1100px; margin:0 auto; padding:16px; }
+h2 { margin:.2em 0 .6em; font-size:1.3rem; }
+h3 { margin:.2em 0 .5em; font-size:1.05rem; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:12px; }
+.grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+.num { font-size:2rem; font-weight:700; color:var(--brand); }
+.muted { color:var(--muted); font-size:.9rem; }
+label { display:block; font-weight:600; margin:12px 0 4px; }
+input,select,textarea { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font:inherit; background:#fff; color:inherit; }
+textarea { min-height:110px; resize:vertical; }
+button,.btn { font:inherit; padding:10px 14px; border-radius:8px; border:1px solid var(--brand); background:var(--brand); color:#fff; cursor:pointer; text-decoration:none; display:inline-block; }
+button.sec,.btn.sec { background:#fff; color:var(--brand); }
+button.mini { padding:4px 9px; font-size:.85rem; }
+button.peligro { background:#fff; color:var(--bad); border-color:var(--bad); }
+button:disabled { opacity:.5; cursor:default; }
+.fila { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.fila.sb { justify-content:space-between; }
+.chip { display:inline-block; padding:2px 9px; border-radius:99px; font-size:.8rem; background:var(--brand-2); color:var(--brand); margin-right:4px; }
+.chip.leve { background:#e7f5ea; color:var(--ok); } .chip.moderada { background:#fef3c7; color:var(--warn); }
+.chip.grave,.chip.centinela,.chip.venc { background:#fee2e2; color:var(--bad); }
+.aviso { border-left:4px solid var(--warn); background:#fffbeb; padding:10px 12px; border-radius:6px; margin:10px 0; }
+.aviso.mal { border-color:var(--bad); background:#fef2f2; }
+a.item { display:block; color:inherit; text-decoration:none; }
+a.item:hover .card { border-color:var(--brand); }
+.kanban { display:grid; gap:12px; grid-template-columns:repeat(4,minmax(230px,1fr)); overflow-x:auto; padding-bottom:8px; }
+.col { background:#e9eef2; border-radius:10px; padding:8px; min-height:140px; }
+.col h3 { padding:2px 6px; }
+.col .card { padding:10px; margin-bottom:8px; }
+dialog { border:none; border-radius:12px; padding:18px; width:min(560px,94vw); }
+dialog::backdrop { background:#0008; }
+#toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:#1d2733; color:#fff; padding:10px 16px; border-radius:8px; opacity:0; transition:opacity .2s; pointer-events:none; z-index:20; }
+#toast.on { opacity:1; }
+.login { max-width:380px; margin:16vh auto; text-align:center; padding:0 16px; }
+.login .card { padding:28px 20px; }
+table { width:100%; border-collapse:collapse; } td,th { text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); }
+#app.publica{max-width:640px;margin:0 auto;padding:16px}
+.afiche-qr { text-align:center; background:#fff; border:1px solid var(--line); border-radius:10px; padding:28px 20px; max-width:640px; margin:0 auto; }
+.afiche-qr .qr-tit { font-size:2rem; margin:0 0 6px; color:var(--brand); }
+.afiche-qr .qr-sub { font-size:1.2rem; margin:6px 0; }
+.afiche-qr .qr-caja svg { width:min(70vw,380px); height:auto; margin:14px 0; }
+.afiche-qr .qr-serv { font-size:1.15rem; font-weight:600; margin:4px 0; }
+.afiche-qr .qr-pie { font-size:.9rem; color:var(--muted); margin-top:18px; }
+@media print { header.top, nav.tabs, .nover, #toast { display:none !important; } body { background:#fff; } main { padding:0; max-width:none; } .afiche-qr { border:none; } .qr-url { display:none !important; } }
+.pie { flex-shrink:0; text-align:center; padding:8px 16px 10px; font-size:.75rem; color:var(--muted); }
+.pie a { color:var(--brand); }
+@media print { .pie { display:none !important; } }
+.pie-marca { display:inline-flex; align-items:center; gap:6px; color:var(--muted); text-decoration:none; }
+.pie-marca img { height:14px; width:auto; }
+.pie-marca strong { color:var(--brand); }
+.subtabs { display:flex; gap:8px; margin:0 0 14px; flex-wrap:wrap; }
+.subtabs a { padding:8px 14px; border:1px solid var(--line); border-radius:99px; background:#fff; color:var(--muted); text-decoration:none; }
+.subtabs a.on { background:var(--brand); border-color:var(--brand); color:#fff; font-weight:600; }
+@media print { .subtabs { display:none !important; } }
+</style>
+<script type="text/javascript" async charset="utf-8" src="https://www.gstatic.com/recaptcha/releases/bSuJ2xBC8cFy7pM4Z3Hu9boH/recaptcha__en.js" crossorigin="anonymous" integrity="sha384-9mbe30ZjP8YtpsPpfkAY9YFHSid+HzvwAEuq3Hi/hp/TlAYMhJFop96TI6Nva6Dn"></script>
+<script src="https://www.google.com/recaptcha/enterprise.js"></script>
+</head>
+<body>
+
+  <div id="app"><div class="login"><div class="card"><h2>Calidad Carrillo</h2><p class="muted">Herramientas de soporte al Comité de Calidad</p><button>Ingresar con Google</button></div></div></div>
+  <footer class="pie"><a class="pie-marca" href="https://dastudio-dev.github.io/portfolio/" target="_blank" rel="noopener"><img src="https://calidadcarrillo.web.app/img/dastudio-logo.png" alt="" width="32" height="20"><span>Desarrollado por <strong>DAStudio</strong></span></a></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/app.js"></script>
+
+
+<div id="fire_app_check_[DEFAULT]" style="display: none;"><div class="grecaptcha-badge" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;"><div class="grecaptcha-logo"><iframe title="reCAPTCHA" width="256" height="60" role="presentation" name="a-s7f625vl9mnn" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LdzbgUuAAAAAHfExXDYR0bw9OSOMnIrqZb0R0Lr&co=aHR0cHM6Ly9jYWxpZGFkY2FycmlsbG8ud2ViLmFwcDo0NDM.&hl=en&v=bSuJ2xBC8cFy7pM4Z3Hu9boH&size=invisible&anchor-ms=20000&execute-ms=30000&cb=4r4io3wfbtc0"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div>
+</body>
+</html>

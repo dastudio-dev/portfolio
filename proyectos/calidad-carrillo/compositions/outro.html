@@ -1,0 +1,97 @@
+<!-- compositions/outro.html -->
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background: var(--ground, #0d1117);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: var(--font-display, "Plus Jakarta Sans", sans-serif);
+    }
+    .outro-rule {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--brand, #38bdf8), transparent);
+    }
+    .outro-mark {
+      width: 160px;
+      height: auto;
+      display: block;
+    }
+    .outro-word {
+      margin-top: 34px;
+      font-size: 84px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--fg, #f8fafc);
+    }
+    .outro-word span {
+      color: var(--brand, #38bdf8);
+    }
+    .outro-tagline {
+      margin-top: 22px;
+      font-size: 34px;
+      font-weight: 500;
+      color: var(--muted, #8b93a3);
+      text-align: center;
+    }
+    .outro-cta {
+      margin-top: 56px;
+      font-family: var(--font-mono, "JetBrains Mono", monospace);
+      font-size: 28px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand, #38bdf8);
+      border: 1px solid var(--border, #30363d);
+      border-radius: 999px;
+      padding: 16px 34px;
+    }
+  </style>
+
+  <div id="root" data-composition-id="outro" data-width="1080" data-height="1920">
+    <div class="outro-rule" data-layout-ignore></div>
+    <div
+      id="outro-clip"
+      class="clip"
+      data-start="0"
+      data-duration="5"
+      data-track-index="0"
+      style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center"
+    >
+      <img id="outro-mark" class="outro-mark" src="assets/dastudio-mark.png" alt="DAStudio" />
+      <h2 id="outro-word" class="outro-word">DA<span>Studio</span></h2>
+      <p id="outro-tagline" class="outro-tagline">Desarrollo Web &amp; Software a Medida</p>
+      <div id="outro-cta" class="outro-cta">Más proyectos en el portfolio</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      gsap.set("#outro-mark", { opacity: 0, scale: 0.7, y: 10, transformOrigin: "50% 50%" });
+      gsap.set("#outro-word", { opacity: 0, y: 14 });
+      gsap.set("#outro-tagline", { opacity: 0, y: 12 });
+      gsap.set("#outro-cta", { opacity: 0, y: 10 });
+
+      tl.to(
+        "#outro-mark",
+        { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" },
+        0.1,
+      );
+      tl.to("#outro-word", { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.4);
+      tl.to("#outro-tagline", { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 0.66);
+      tl.to("#outro-cta", { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 0.95);
+
+      tl.seek(0);
+      window.__timelines["outro"] = tl;
+    })();
+  </script>
+</template>

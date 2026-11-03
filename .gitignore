@@ -1,0 +1,6 @@
+# HyperFrames reel projects (proyectos/<slug>/): build cache and heavy
+# working files stay local; renders are downloaded and posted manually.
+proyectos/*/node_modules/
+proyectos/*/renders/
+proyectos/*/.hyperframes/
+proyectos/*/.media/
