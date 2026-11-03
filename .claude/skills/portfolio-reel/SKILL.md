@@ -215,3 +215,29 @@ mp4 and `caption.txt` are local artifacts, posted manually by Diego.
   `fetch(blobPath).then(r=>r.blob())` → `downloads.save({filename, data})`; handle a
   `null`/declined result. A plain `<a href>` does not let phones save the file.
 - After approval: ask before committing (`proyectos/<slug>/` is untracked until then).
+
+## 8. Variant: reel "mezcla" (varios proyectos en un solo video)
+
+Approved: `proyectos/portfolio-mix` v1 (30 s, 5 proyectos). Same house style, but the message
+is "N proyectos reales, N rubros" and each project is one scene. Generator:
+`templates/gen_mix.py` (read its header docstring; it uses `feature2` with **2 shots per scene**).
+
+- **Intake adds**: which projects, and the URLs. Say how many fit: ~4.5 s per project, so
+  5 projects ≈ 30 s (hook 2.5 + 5×4.5 + outro 5).
+- **Screens**: reuse scrubbed captures that already exist (other reels' `assets/screens/`)
+  and the portfolio's own `img/*.png` (real, no URL bar) before capturing production again;
+  copy them into the new project's `assets/screens/` with a prefix per project (`flota-`,
+  `cc-`, `jl-`, `eg-`, `nc-`). Check each `img/` file first: crop status bars/URL bars (e.g.
+  the first `neocalcu_*.png` shows the domain in the browser bar — don't use it).
+- **Mobile apps** (1080-wide portrait PNGs): crop the Android status bar (~88 px), use S=1.0,
+  a taller band (`band_top=455, band_h=820`) and a vertical pan that "scrolls" the app.
+  Highlight coordinates are in the cropped image's px (previews are scaled: multiply by the
+  factor the image viewer reports).
+- **Two shots per scene**: the first pans for half the scene; a brand-edged wipe sweeps across
+  the band (0.5 s, starts 0.25 s before the cut) and hides the swap; then the second shot pans.
+- **Hook / outro**: hook lists the N rubros and lights them in sequence (0.3 s apart); outro
+  "Cinco rubros. / Tu herramienta." (keep each outro line to one line: long phrases wrap and
+  trigger `content_overlap`) + chips of what DAStudio builds + the brand.
+- **Audio for 30 s**: `data-media-start="5"` of the 35 s track (start on a bar; the peak lands
+  on the outro); fade-out 1.4.
+- Render takes ~2 min (30 s). Caption lists each project in one line with an emoji.
