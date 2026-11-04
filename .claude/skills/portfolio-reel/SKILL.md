@@ -171,18 +171,15 @@ sheet; look at each scene's start, mid-pan and end, plus the outro.
 
 ## 6. Environment quirks (this machine)
 
-Run every `hyperframes` command with:
+Run every `hyperframes` command with `export PATH="$HOME/.local/bin:$PATH"`.
 
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-export HYPERFRAMES_FFMPEG_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ffmpeg"
-export HYPERFRAMES_FFPROBE_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ffprobe"
-```
-
-- **No `sudo`**: the static ffmpeg lives in `/tmp` (not persistent across restarts —
-  re-download from johnvansickle.com if missing). Writing to `~/.bashrc` is blocked.
-- **HeyGen is already set up** (`heygen` in `~/.local/bin`, signed in as Diego, plan Free,
-  `npx hyperframes auth status` to confirm). If it is ever missing, ask him to run
+- **ffmpeg**: installed system-wide (`/usr/bin/ffmpeg`, apt, 2026-11-04) — no
+  `HYPERFRAMES_FFMPEG_PATH` needed any more. If it is ever missing again: there is no `sudo`
+  for the agent, so ask Diego to run `! sudo apt-get install -y ffmpeg` (or use the static build
+  from johnvansickle.com in `~/.local/bin`, after asking). Writing to `~/.bashrc` is blocked.
+- **HeyGen**: `heygen` in `~/.local/bin`, signed in as Diego via `heygen auth login --oauth`
+  (plan **Free**, no credits; no cloned voices on the account; whether Free allows
+  `heygen voice clone create` is untested). `npx hyperframes auth status` to confirm. If it is ever missing, ask him to run
   `! curl -fsSL https://static.heygen.ai/cli/install.sh | bash` and
   `! npx hyperframes auth login --device` himself (the auto-mode classifier blocks the agent).
 - **Music**: `npx hyperframes media-use resolve --type bgm --intent "upbeat energetic modern
@@ -202,6 +199,10 @@ export HYPERFRAMES_FFPROBE_PATH="/tmp/ffmpeg-static/ffmpeg-7.0.2-amd64-static/ff
 `renders/` is gitignored (`proyectos/*/{node_modules,renders,.hyperframes,.media}/`): the
 mp4 and `caption.txt` are local artifacts, posted manually by Diego.
 
+- **Final destination: Google Drive.** Every approved video + caption goes to
+  `/mnt/diegosteinberg_google_drive_1790645175/1-Trabajo/reels dastudio/<slug>/` (one folder
+  per project, containing the mp4 and `caption.txt`). Copy with `cp`, verify with `cmp`.
+  Keep only the approved version there.
 - **In the Claude desktop app, send the video with `SendUserFile`** (display `render`) and
   mention where `caption.txt` is (paste its text in the reply if he asks). This is the
   default now; ask only if he wants another channel.
@@ -241,3 +242,35 @@ is "N proyectos reales, N rubros" and each project is one scene. Generator:
 - **Audio for 30 s**: `data-media-start="5"` of the 35 s track (start on a bar; the peak lands
   on the outro); fade-out 1.4.
 - Render takes ~2 min (30 s). Caption lists each project in one line with an emoji.
+
+## 9. Variant: reel sin voz, de texto cinético ("sistema a medida")
+
+Approved: `proyectos/sistema-a-medida` v2 (20 s, música, **sin voz**). Origin: Diego asked for a
+reel like the one made in Ootto (hook "¿Para qué tener un sistema a medida?") but with only the
+house music and animated on-screen text, "dinámico y ágil". Generator: `templates/gen_kin.py`
+(read its header docstring; it builds on `gen_mix.py`).
+
+- **Why no voice**: the voice used in the Ootto reel was Diego's clone there (Ootto subscription
+  cancelled; reels were downloaded). Local `hyperframes tts` (Kokoro) only offers `ef_dora` for
+  Spanish — Spain-neutral accent, female, NOT rioplatense, so it is rejected. HeyGen Free has no
+  cloned voice. Options if a voice is wanted later: Diego records the locución himself (best), or
+  a voice clone from a 30–60 s sample.
+- **Structure (20 s)**: hero 2.5 s (the question in caps, `a medida` in brand blue, one sub-line)
+  + 5 scenes × 2.5 s + outro 5 s ("Escribinos y contanos tu proceso" → DAStudio mark). Every
+  scene = ONE real screenshot (no repeats between scenes; reuse scrubbed ones from other projects'
+  `assets/screens/` or the portfolio's `img/`) + a 2-line title (≤ 33 characters or the third
+  line collides with the band).
+- **Text motion**: words pop in one by one (blur + rise + `back.out`), 0.09 s stagger; `*palabra`
+  marks brand-blue words and `~palabra~` greys a word and draws an animated strike-through
+  (emit that tween only in scenes that have it, or `check` flags the CSS transform conflict).
+- **Bottom zone (below the band) is animated, never static** (Diego: "es muy estática"): in place
+  of the old ghost numeral, each scene has (1) 3 chips that the **cursor** clicks in turn — each
+  one turns brand-bordered with a ✓ (click times start at 1.5 s, after the chips' own entrance,
+  and use `overwrite: "auto"`); (2) a **count-up number** with a label, driven by a gsap proxy
+  object + `onUpdate`; (3) a 5-segment **progress bar** (previous scenes full, current fills
+  linearly). Counter values must be real figures visible in that screenshot (75 unidades,
+  224 medicamentos, "Ofertas 4", 12 meses); never invent numbers, and never draw fake charts.
+  Keep everything above y≈1500 except the bar (Instagram UI owns the bottom).
+- **Audio**: same `assets/bgm.wav`; for 20 s use `data-media-start="15"`, fade-out 1.4.
+- Render ~1.5 min. Deliver as §7 (Drive folder `reels dastudio/<slug>/`, keep only the approved
+  version, caption.txt with hook, 4 emoji bullets, CTA, brand line and 7 hashtags).
