@@ -310,3 +310,17 @@ Approved as drafts (2026-11-04), pensados para los domingos a la mañana: `senal
 - **Hero**: las palabras de la pregunta no pueden superar ~9 letras por línea a 150 px (si no, se sale del
   cuadro); `check` lo marca. Remate: una línea que se parte en dos da `content_overlap`: cortala a mano.
 - Cards: con ≤4 ítems 46 px, con 6 ítems 36 px. Barra de progreso inferior y cursor son la zona animada.
+
+## 12. Variant: reel ANTES / DESPUÉS (sin voz)
+
+Draft pending Diego's review (2026-11-04): `proyectos/antes-y-despues` (23,5 s, 4 pares). Generator:
+`templates/gen_ba.py` (read its header docstring; one `CFG` entry per reel, `pairs` = lista de pares).
+
+- **Par de 4 s**: ANTES 1,5 s (frase grande en gris con UNA palabra tachada, solo texto) → DESPUÉS 2,5 s
+  (escena de `gen_kin`: título, captura REAL, chips tildados por el cursor, contador).
+- **Regla de marca**: el "antes" nunca se dibuja (nada de planillas, chats o pantallas falsas, ver §2/CLAUDE.md)
+  y es un malestar genérico, nunca una afirmación sobre un cliente. El "después" siempre es una captura real.
+- Pares del ejemplo: Planillas ~sueltas~ → Un tablero único; Vencimientos ~olvidados~ → Alertas
+  automáticas; Costos ~dispersos~ → Costo por fase; Pedidos por ~chat~ → Catálogo online.
+- Estructura: hero 2,5 s ("Antes y después") + N×4 s + outro 5 s. Audio: `data-media-start="10"` (la pista dura 35 s).
+- Tag del "después": `NN / 0N · DESPUÉS · <tema>`; `antes` ≤ 30 caracteres.
