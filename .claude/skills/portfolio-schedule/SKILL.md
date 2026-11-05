@@ -16,9 +16,13 @@ Ootto (its subscription is not needed): only Claude, GitHub and Metricool (free 
 - Brand `blogId` = `6145172`, Instagram = `dastudioweb`, timezone `America/Argentina/Buenos_Aires`.
   Always call `getBrandSettings` first and confirm the Instagram handle is still `dastudioweb`
   (it once pointed to another profile). If it differs, stop and tell Diego to relink it in Metricool.
-- Free plan: ~50 posts/month. Google Drive integration is Premium: do NOT rely on it.
-- Default cadence: 3 posts/week, Mon/Wed/Fri at 10:00 (best hour from `getBestTimeToPostByNetwork`;
-  re-check each month).
+- Free plan: **20 posts/month** (confirmed by Diego 2026-11-04; Metricool's help center says 20, some
+  blogs say 30/50 and are wrong). Counted per calendar month. Before scheduling, count what is already
+  scheduled for that month with `getScheduledPosts` and never plan more than 20. Google Drive integration
+  is Premium: do NOT rely on it.
+- Default cadence: Mon/Wed/Fri at 10:00 plus Sundays at 10:00 (best hour from `getBestTimeToPostByNetwork`;
+  re-check each month). 3/week + 4 Sundays ≈ 16 posts in a month, which fits the 20 limit (November 2026 =
+  16 scheduled). A month with 5 Sundays or 5 Mon/Wed/Fri weeks can exceed 20: trim the plan.
 
 ## Flow
 1. **Plan**: pick which projects and in what order; list free dates with `getScheduledPosts`.
