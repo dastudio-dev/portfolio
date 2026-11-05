@@ -49,6 +49,21 @@ Ootto (its subscription is not needed): only Claude, GitHub and Metricool (free 
 6. **Verify** with `getScheduledPosts` for the whole range and report dates, titles and plannerUrl.
 7. **Metrics** the next month with `getAnalyticsDataByMetrics` to adjust topics and hours.
 
+## Cleanup (Diego's rule, 2026-11-04)
+- **GitHub release `reels-assets`: delete its assets on the LAST DAY of every month** (after that day's
+  post is published). Metricool already copied each video to its own storage, so the release is only a
+  temporary host. Check first that nothing scheduled for the next days still points to a release URL that
+  Metricool has not copied (`getScheduledPosts` shows `static.metricool.com` URLs once copied).
+  ```bash
+  gh release view reels-assets --repo diegoastein/portfolio --json assets --jq '.assets[].name'   # look first
+  gh release delete-asset reels-assets <file.mp4> --repo diegoastein/portfolio -y                  # one by one
+  ```
+  Deleting is irreversible: list the assets to Diego and get his OK in that session before removing.
+- **Google Drive (`reels dastudio`): never delete.** A replaced version goes to `archivo/<slug>_vN/`
+  (e.g. `archivo/portfolio-mix_v1/`), it is not removed.
+- When a published/scheduled video is replaced (new render), upload the new file with a new name
+  (`<slug>_v2.mp4`), then `updateScheduledPost` with the new URL; keep the same date.
+
 ## Rules
 - Never schedule without Diego approving the reel and caption (new content); never paraphrase a caption.
 - Keep the brand rules of the repo CLAUDE.md (marca neutra DAStudio, no exposed domains).
