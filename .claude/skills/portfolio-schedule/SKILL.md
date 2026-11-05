@@ -59,8 +59,11 @@ Ootto (its subscription is not needed): only Claude, GitHub and Metricool (free 
   gh release delete-asset reels-assets <file.mp4> --repo diegoastein/portfolio -y                  # one by one
   ```
   Deleting is irreversible: list the assets to Diego and get his OK in that session before removing.
-- **Google Drive (`reels dastudio`): never delete.** A replaced version goes to `archivo/<slug>_vN/`
-  (e.g. `archivo/portfolio-mix_v1/`), it is not removed.
+- **Google Drive (`reels dastudio`): only APPROVED versions stay, and they are never deleted.** When a
+  video is replaced by a new approved version, the old (non-approved) file is deleted from Drive
+  (`<slug>/` keeps just the current mp4 + `caption.txt`). Diego's rule, 2026-11-04.
+- A one-time reminder (scheduled task `limpiar-release-reels-fin-de-mes`) fires on 2026-11-30 20:00; at
+  each month end create the next one (`create_scheduled_task`, `fireAt` = last day of the month, 20:00 -03:00).
 - When a published/scheduled video is replaced (new render), upload the new file with a new name
   (`<slug>_v2.mp4`), then `updateScheduledPost` with the new URL; keep the same date.
 

@@ -202,8 +202,8 @@ mp4 and `caption.txt` are local artifacts, posted manually by Diego.
 - **Final destination: Google Drive.** Every approved video + caption goes to
   `/mnt/diegosteinberg_google_drive_1790645175/1-Trabajo/reels dastudio/<slug>/` (one folder
   per project, containing the mp4 and `caption.txt`). Copy with `cp`, verify with `cmp`.
-  The folder holds the current approved version; Drive files are NEVER deleted, so a replaced version
-  moves to `reels dastudio/archivo/<slug>_vN/` (Diego's rule, 2026-11-04).
+  Only APPROVED versions live in Drive and they are never deleted; when a new version is approved, the
+  old non-approved file is deleted from the folder (Diego's rule, 2026-11-04).
 - **In the Claude desktop app, send the video with `SendUserFile`** (display `render`) and
   mention where `caption.txt` is (paste its text in the reply if he asks). This is the
   default now; ask only if he wants another channel.
