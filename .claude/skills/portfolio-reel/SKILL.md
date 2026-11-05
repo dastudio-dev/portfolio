@@ -274,3 +274,39 @@ house music and animated on-screen text, "dinámico y ágil". Generator: `templa
 - **Audio**: same `assets/bgm.wav`; for 20 s use `data-media-start="15"`, fade-out 1.4.
 - Render ~1.5 min. Deliver as §7 (Drive folder `reels dastudio/<slug>/`, keep only the approved
   version, caption.txt with hook, 4 emoji bullets, CTA, brand line and 7 hashtags).
+
+## 10. Variant: reel de UN proyecto en lote, texto cinético sin voz
+
+Approved as drafts (2026-11-04): `tienda-online`, `landing-constructora`, `app-guardia`, `app-neonatal`,
+`monitor-simulacion` (3 escenas de 4 s, 19,5 s) y `planillas-a-sistema` (concepto, 5 escenas de 2,5 s, 20 s).
+Generator: `templates/gen_proj.py` (read its header docstring; it wraps `gen_kin.py`, so a new reel is a
+config entry in `CFG`, not new code). Use it when Diego asks for several reels at once and "automático".
+
+- **Screens**: portfolio's `img/*.png` (real, no URL bar) or scrubbed ones from other reels
+  (`@archivo`). Skip any capture showing a domain (e.g. `neocalcu_1.png`) and crop the mobile status
+  bar (`crop_top≈110` at 1080 wide). Low-res files (`*_2.png` 247 px wide) are unusable.
+- **One screenshot, three zones**: with a single capture, vary `crop`/`pan_to`/`S` (1.2 → 1.6 to zoom) and
+  put the highlight on a different element each scene. State that in the delivery note.
+- **Counters** only with a figure really visible in that zone (4 ofertas, 8 años, 10 kg, 2540 g, 224
+  resultados). Simulated values get "simulado" in the label. No figure → omit `count`.
+- **Facts**: take names and claims from the repo's own captions (`proyectos/*/renders/caption.txt`) and
+  fix them if Diego corrects one (JL is a **landing page**, not a licitaciones site).
+- **Check + look**: `check` then `snapshot --at 4.5,8.5,12.5` + the contact sheet, before rendering (~1,2 min each).
+- **Delivery**: `renders/<slug>_v1.mp4` + `caption.txt` → Drive `reels dastudio/<slug>/`; scheduling is
+  done with the `portfolio-schedule` skill after Diego approves.
+
+## 11. Variant: reel de proceso / concepto (sin capturas de producto, sin voz)
+
+Approved as drafts (2026-11-04), pensados para los domingos a la mañana: `senales-sistema`,
+`procesos-digitalizables`, `un-problema-primero`, `una-idea-varios-formatos` (19,5 s). Generator:
+`templates/gen_text.py` (read its header docstring; one `CFG` entry per reel). Use it when the topic is
+"cómo trabajamos / qué se puede resolver", NOT a project.
+
+- **Structure**: hero 2,5 s (gancho en mayúsculas) → lista 9 s (2–6 tarjetas que entran de a una; el cursor
+  las tilda) → remate 3 s (frase grande, 1–3 líneas, `*palabra` en celeste) → outro 5 s.
+- **Copy rules**: no cifras, plazos, precios ni pasos de trabajo inventados. Los ejemplos de procesos salen
+  de lo que ya muestran los captions del portfolio (stock, costos, flota, reportes, formularios, catálogo,
+  alertas) y el método de Diego ("vemos qué conviene ordenar primero", ver `como-empieza-el-trabajo`).
+- **Hero**: las palabras de la pregunta no pueden superar ~9 letras por línea a 150 px (si no, se sale del
+  cuadro); `check` lo marca. Remate: una línea que se parte en dos da `content_overlap`: cortala a mano.
+- Cards: con ≤4 ítems 46 px, con 6 ítems 36 px. Barra de progreso inferior y cursor son la zona animada.
