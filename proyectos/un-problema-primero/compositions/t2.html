@@ -1,0 +1,37 @@
+<!-- compositions/t2.html -->
+<template>
+  <style>
+    #root { position:absolute; inset:0; overflow:hidden; background:var(--ground,#0d1117);
+      font-family:var(--font-display,"Plus Jakarta Sans",sans-serif); color:var(--fg,#f8fafc); }
+    .wipe { position:absolute; top:0; bottom:0; left:0; width:1100px; background:var(--surface,#161b22); z-index:50; }
+    .wipe::after { content:""; position:absolute; top:0; bottom:0; right:0; width:14px; background:var(--brand,#38bdf8); }
+    .mono { font-family:var(--font-mono,"JetBrains Mono",monospace); }
+    .ghost { position:absolute; left:40px; bottom:-60px; font-size:760px; font-weight:800; line-height:1; letter-spacing:-0.04em;
+      color:transparent; -webkit-text-stroke:3px rgba(56,189,248,0.16); z-index:1; }
+    .tag { position:absolute; left:70px; top:200px; font-size:30px; letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--brand,#38bdf8); z-index:5; }
+    .tag b { color:var(--fg,#f8fafc); font-weight:700; }
+
+    .ln { position:absolute; left:70px; right:70px; font-size:116px; font-weight:800; letter-spacing:-0.035em; line-height:1.02; }
+    .ln .hi { color:var(--brand,#38bdf8); }
+  </style>
+  <div id="root" data-composition-id="t2" data-width="1080" data-height="1920">
+    <div id="t2-clip" class="clip" data-start="0" data-duration="3.0" data-track-index="0" style="position:absolute;inset:0">
+      <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion id="t2-g" style="font-size:560px;bottom:-30px">&lt;/&gt;</div>
+      <div class="ln" id="t2-l0" style="top:470px"><span class="sw" style="display:inline-block">Un</span> <span class="sw hi" style="display:inline-block">proceso.</span></div><div class="ln" id="t2-l1" style="top:620px"><span class="sw" style="display:inline-block">Un</span> <span class="sw hi" style="display:inline-block">problema.</span></div><div class="ln" id="t2-l2" style="top:770px"><span class="sw" style="display:inline-block">Una</span> <span class="sw hi" style="display:inline-block">solución.</span></div>
+      <div id="t2-wipe" class="wipe" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      gsap.set("#t2-clip .sw", { opacity: 0, filter: "blur(12px)", y: 40, scale: 0.85 });
+      gsap.set("#t2-g", { opacity: 0, scale: 0.92 });
+      tl.to("#t2-wipe", { x: 1180, duration: 0.42, ease: "power3.inOut" }, 0);
+      tl.to("#t2-g", { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" }, 0.2);
+      tl.to("#t2-clip .sw", { opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.35, ease: "back.out(1.5)", stagger: 0.12 }, 0.35);
+      tl.seek(0);
+      window.__timelines["t2"] = tl;
+    })();
+  </script>
+</template>

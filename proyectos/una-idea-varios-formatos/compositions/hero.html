@@ -1,0 +1,39 @@
+<!-- compositions/hero.html -->
+<template>
+  <style>
+    #root { position:absolute; inset:0; overflow:hidden; background:var(--ground,#0d1117);
+      font-family:var(--font-display,"Plus Jakarta Sans",sans-serif); color:var(--fg,#f8fafc); }
+    .wipe { position:absolute; top:0; bottom:0; left:0; width:1100px; background:var(--surface,#161b22); z-index:50; }
+    .wipe::after { content:""; position:absolute; top:0; bottom:0; right:0; width:14px; background:var(--brand,#38bdf8); }
+    .mono { font-family:var(--font-mono,"JetBrains Mono",monospace); }
+    .ghost { position:absolute; left:40px; bottom:-60px; font-size:760px; font-weight:800; line-height:1; letter-spacing:-0.04em;
+      color:transparent; -webkit-text-stroke:3px rgba(56,189,248,0.16); z-index:1; }
+    .tag { position:absolute; left:70px; top:200px; font-size:30px; letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--brand,#38bdf8); z-index:5; }
+    .tag b { color:var(--fg,#f8fafc); font-weight:700; }
+
+    .kick { position:absolute; left:70px; top:215px; font-size:30px; letter-spacing:0.14em; text-transform:uppercase; color:var(--brand,#38bdf8); }
+    .q { position:absolute; left:70px; right:50px; top:420px; font-size:150px; font-weight:800; line-height:1.0; letter-spacing:-0.04em; text-transform:uppercase; }
+    .q .hi { color:var(--brand,#38bdf8); }
+    .sub { position:absolute; left:70px; right:70px; top:1130px; font-size:50px; font-weight:600; color:#c9d1d9; }
+  </style>
+  <div id="root" data-composition-id="hero" data-width="1080" data-height="1920">
+    <div id="hero-clip" class="clip" data-start="0" data-duration="2.5" data-track-index="0" style="position:absolute;inset:0">
+      <div class="ghost" data-layout-allow-overflow data-layout-allow-occlusion style="font-size:600px;left:30px;bottom:-40px">&lt;/&gt;</div>
+      <div class="kick mono" id="hero-kick">DAStudio · Desarrollo a medida</div>
+      <div class="q" id="hero-q"><span class="w" style="display:inline-block">Una</span> <span class="w" style="display:inline-block">idea,</span> <span class="w hi" style="display:inline-block">varios</span> <span class="w hi" style="display:inline-block">formatos</span></div>
+      <div class="sub" id="hero-sub">Elegimos el que le sirve a tu negocio.</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      gsap.set("#hero-q .w", { y: 36 });
+      gsap.set("#hero-sub", { opacity: 0, y: 30 });
+      tl.to("#hero-q .w", { y: 0, duration: 0.45, ease: "expo.out", stagger: 0.05 }, 0);
+      tl.to("#hero-sub", { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.15);
+      tl.seek(0);
+      window.__timelines["hero"] = tl;
+    })();
+  </script>
+</template>
