@@ -25,6 +25,9 @@ Ootto (its subscription is not needed): only Claude, GitHub and Metricool (free 
 2. **Reel + caption**: made with `portfolio-reel`. Each project has
    `proyectos/<name>/renders/<name>_vN.mp4` and `caption.txt` (use the newest version).
 3. **Diego approves** the video and caption before anything is uploaded or scheduled.
+   Once approved, the final copy (mp4 + `caption.txt`) lives in Google Drive:
+   `/mnt/diegosteinberg_google_drive_1790645175/1-Trabajo/reels dastudio/<slug>/`
+   (`renders/` is gitignored; nothing is committed). Check it is there before step 4.
 4. **Public URL**: the connector only accepts public URLs, not local files. Upload to the
    release `reels-assets` of the portfolio repo:
    ```bash
