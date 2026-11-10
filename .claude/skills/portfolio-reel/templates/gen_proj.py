@@ -11,7 +11,7 @@ Cada entrada de CFG:
   dur       segundos por escena (4 con 3 escenas; 2,5 con 5)
   scenes    lista de dict(tag, title (<=33 car.), shot=dict(img,w,S,crop,pan_to,hl), chips=[3], count=(valor, etiqueta) o ausente, mobile=True)
   caption   texto del post (nunca inventes cifras ni nombres de sistemas)
-Crea proyectos/<slug>/ copiando sistema-a-medida (fuentes, marca, bgm.wav) y escribe compositions/, index.html y renders/caption.txt.
+Crea proyectos/<slug>/ copiando sistema-a-medida (fuentes, marca, bgm.mp3) y escribe compositions/, index.html y renders/caption.txt.
 Despues: npx --yes hyperframes@0.9.8 check, snapshot --at 4.5,8.5,12.5 y mirar la hoja de contacto, y render -o renders/<slug>_v1.mp4.
 Con count ausente se oculta el contador (usalo si la captura no tiene una cifra real visible).
 """
@@ -94,7 +94,7 @@ def build(slug, cfg):
     head = idx[: idx.rindex("<div", 0, k)]
     tail = f"""{hosts}
       <audio id="bgm" class="clip" data-start="0" data-duration="{total}" data-media-start="15" data-volume="1"
-        data-fade-in="0.2" data-fade-out="1.4" data-track-index="0" src="assets/bgm.wav"></audio>
+        data-fade-in="0.2" data-fade-out="1.4" data-track-index="0" src="assets/bgm.mp3"></audio>
     </div>
     <script>
       window.__timelines["main"] = gsap.timeline({{ paused: true }});

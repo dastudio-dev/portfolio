@@ -122,7 +122,7 @@ def build(slug, cfg):
     head = idx[: idx.rindex("<div", 0, k)]
     tail = f"""{hosts}
       <audio id="bgm" class="clip" data-start="0" data-duration="{total}" data-media-start="10" data-volume="1"
-        data-fade-in="0.2" data-fade-out="1.4" data-track-index="0" src="assets/bgm.wav"></audio>
+        data-fade-in="0.2" data-fade-out="1.4" data-track-index="0" src="assets/bgm.mp3"></audio>
     </div>
     <script>
       window.__timelines["main"] = gsap.timeline({{ paused: true }});
