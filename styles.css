@@ -493,3 +493,17 @@ a { color: inherit; text-decoration: none; }
   .whatsapp-float { width: 52px; height: 52px; bottom: 1.1rem; right: 1.1rem; }
   .whatsapp-float svg { width: 26px; height: 26px; }
 }
+
+/* Footer legal & páginas legales */
+.footer-legal { margin-top: 0.75rem; line-height: 1.7; }
+.footer-legal a, .footer-legal-links a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; transition: var(--transition); }
+.footer-legal a:hover, .footer-legal-links a:hover { color: var(--accent-sky); }
+.footer-legal-links { margin-top: 0.5rem; }
+.legal-page { padding: 7rem 0 4rem; }
+.legal-container { max-width: 760px; }
+.legal-container h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.4rem; }
+.legal-container h2 { font-size: 1.1rem; font-weight: 700; margin: 2rem 0 0.6rem; color: var(--text-main); }
+.legal-container p, .legal-container li { color: var(--text-muted); line-height: 1.75; font-size: 0.95rem; }
+.legal-container ul { padding-left: 1.2rem; margin: 0.5rem 0; }
+.legal-container a { color: var(--accent-sky); }
+.legal-updated { font-family: var(--font-mono); font-size: 0.8rem !important; color: var(--text-dim) !important; }
