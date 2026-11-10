@@ -12,3 +12,8 @@ RedirectMatch 403 ^/proyectos/_capture-
 <FilesMatch "(?i)^(CLAUDE|GEMINI|AGENTS)\.md$|^(package(-lock)?|hyperframes(\.lock)?|meta)\.json$|\.(py|lock)$">
   Require all denied
 </FilesMatch>
+
+# Dominio canónico: sin www. (Hostinger ya redirige HTTP -> HTTPS.)
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.dastudio\.com\.ar$ [NC]
+RewriteRule ^(.*)$ https://dastudio.com.ar/$1 [R=301,L]

@@ -8,8 +8,8 @@ Este archivo contiene las directrices de comportamiento y reglas técnicas para 
 
 - **Nombre del Proyecto**: DAStudio Portfolio
 - **Propósito**: Portafolio profesional de soluciones web, sistemas B2B, e-commerce y aplicaciones médicas.
-- **Repositorio GitHub**: [https://github.com/diegoastein/portfolio](https://github.com/diegoastein/portfolio)
-- **Despliegue GitHub Pages**: [https://diegoastein.github.io/portfolio/](https://diegoastein.github.io/portfolio/)
+- **Repositorio GitHub**: [https://github.com/dastudio-dev/portfolio](https://github.com/dastudio-dev/portfolio)
+- **Producción (Hostinger)**: [https://dastudio.com.ar](https://dastudio.com.ar) — deploy automático desde `main` en cada push (dominio sin `www`; el `www` redirige).
 
 ---
 

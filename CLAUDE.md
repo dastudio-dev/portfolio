@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **DAStudio Portfolio** es un sitio web de portafolio para un desarrollador web enfocado en software a medida, sistemas B2B, plataformas de e-commerce, aplicaciones de utilidad médica y sitios corporativos.
 
-- **Repositorio GitHub**: [https://github.com/diegoastein/portfolio](https://github.com/diegoastein/portfolio)
-- **Producción (GitHub Pages)**: [https://diegoastein.github.io/portfolio/](https://diegoastein.github.io/portfolio/)
+- **Repositorio GitHub**: [https://github.com/dastudio-dev/portfolio](https://github.com/dastudio-dev/portfolio)
+- **Producción (Hostinger)**: [https://dastudio.com.ar](https://dastudio.com.ar) — deploy automático desde `main` en cada push (dominio sin `www`; el `www` redirige).
 
 ---
 
