@@ -29,8 +29,10 @@ git push origin main
 
 ## Reglas de Diseño & Guías del Proyecto
 
-### 1. Estética Sobria & Humana (Sin Neón)
-- **Cero Efectos Neón / IA**: No utilizar fondos fluorescentes, luces radiales borrosas ni patrones sobrecargados estilo plantilla genérica de IA.
+### 1. Estética Dinámica & Humana (Sin Neón)
+- **Dinamismo con criterio** (rediseño 2026-11): el sitio debe sentirse moderno y ágil: tipografía grande, aparición al hacer scroll, carril de capturas en movimiento y pasos del proceso que se activan al scrollear. Todo con CSS/JS propio, respetando `prefers-reduced-motion`.
+- **Estructura** (v2): hero tipográfico con carril de capturas reales; **"Cómo trabajamos" va antes que los proyectos** y prevalece sobre ellos; los trabajos se muestran como lista + panel en la misma página. No mostrar cantidad de proyectos ni cifras de relleno; no usar modales para los casos.
+- **Cero Efectos Neón / IA**: No utilizar fondos fluorescentes, luces radiales borrosas, gradientes en texto, grillas decorativas ni patrones sobrecargados estilo plantilla genérica de IA.
 - **Paleta de Colores**: Fondo neutro Slate-950 (`#0d1117`), tarjetas (`#161b22`), bordes definidos (`#30363d`) y acentos sólidos en azul cielo (`#38bdf8`) y azul primario (`#2563eb`).
 - **Tipografía**: *Plus Jakarta Sans* para títulos y cuerpo; *JetBrains Mono* para badges y código.
 
@@ -49,7 +51,8 @@ git push origin main
 - Mantener la marca neutra `DAStudio / Desarrollo Web & Software a Medida`. No personalizar con nombres propios individuales.
 
 ### 5. Galerías Interactivas
-- Todas las tarjetas de proyectos incorporan un carrusel interactivo (`.card-gallery-slider`) con flechas de navegación (`‹` y `›`) y contador (`1 / N`).
-- Las ventanas modales despliegan la grilla completa de capturas reales para agrandar con un solo clic.
+- Cada proyecto se muestra en el panel de "Proyectos" (`#workPanel`): captura principal, miniaturas para cambiar de captura y problema/solución visibles sin abrir nada.
+- Al hacer clic en la captura principal se amplía en el lightbox (solo imagen). No hay modal de caso de estudio.
+- Los datos de cada proyecto viven en `script.js` (objeto `projects`).
 
 ---

@@ -14,11 +14,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=20261110">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="styles.css?v=20261115">
 </head>
 <body>
 
   <!-- Header Navigation -->
+  <div class="scroll-progress" id="scrollProgress"></div>
   <header class="navbar" id="navbar">
     <div class="container nav-container">
       <a href="#inicio" class="nav-logo">
@@ -29,9 +31,8 @@
       </a>
 
       <nav class="nav-menu" id="navMenu">
-        <a href="#enfoque" class="nav-link">Enfoque</a>
-        <a href="#stack" class="nav-link">Stack</a>
-        <a href="#proyectos" class="nav-link">Algunos Proyectos</a>
+        <a href="#enfoque" class="nav-link">Cómo trabajamos</a>
+        <a href="#proyectos" class="nav-link">Proyectos</a>
         <a href="#contacto" class="nav-link btn-nav-cta">
           <span>Contacto</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -49,412 +50,102 @@
   <main>
     <!-- Hero Section -->
     <section class="hero-section" id="inicio">
-      <div class="container hero-container">
-        
-        <div class="hero-pill">
-          <span class="pill-dot"></span>
-          <span>Desarrollo Web &amp; Software a Medida</span>
-        </div>
-
-        <h1 class="hero-title">
-          Aplicaciones y sitios web orientados a <span class="accent-text">resolver problemas reales</span> de negocio.
-        </h1>
-
-        <p class="hero-description">
-          Herramientas pragmáticas, rápidas y adaptadas a escritorio y dispositivos móviles para digitalizar procesos operativos, potenciar ventas y simular escenarios.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#proyectos" class="btn btn-primary">
-            <span>Ver Algunos Proyectos</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7-7 7"/></svg>
-          </a>
-          <a href="https://wa.me/5491125395150?text=Hola%2C%20quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" aria-label="DAStudio en WhatsApp" class="btn btn-secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38c1.46.8 3.1 1.22 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm5.8 14.15c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.91-1.26-4.8-4.17-4.95-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .9 2.14.07.15.12.32.02.52-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.26 1.63 2.04 1.12 1 2.06 1.31 2.36 1.46.29.15.46.13.63-.08.17-.2.72-.83.91-1.12.19-.29.38-.24.63-.14.26.1 1.66.78 1.94.92.28.14.47.21.54.33.07.12.07.68-.17 1.36z"/></svg>
-            <span>Escribinos por WhatsApp</span>
-          </a>
-        </div>
-
-        <div class="features-ribbon">
-          <div class="ribbon-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            <span>Sistemas B2B &amp; SaaS</span>
-          </div>
-          <div class="ribbon-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
-            <span>E-Commerce &amp; Pagos</span>
-          </div>
-          <div class="ribbon-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            <span>Apps Móviles &amp; PWA</span>
+      <div class="container">
+        <p class="hero-eyebrow">DAStudio <span>/</span> Desarrollo Web &amp; Software a Medida</p>
+        <h1 class="hero-title">Software a medida que <span class="accent-text">resuelve</span> problemas reales.</h1>
+        <div class="hero-foot">
+          <p class="hero-description">Sistemas de gestión, tiendas online y apps clínicas que andan igual de bien en el celular que en la oficina. Las diseñamos, las desarrollamos y las dejamos funcionando.</p>
+          <div class="hero-actions">
+            <a href="#enfoque" class="btn btn-primary btn-lg"><span>Cómo trabajamos</span><svg class="arrow-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://wa.me/5491125395150?text=Hola%2C%20quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" aria-label="DAStudio en WhatsApp" class="btn btn-secondary btn-lg"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38c1.46.8 3.1 1.22 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm5.8 14.15c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.91-1.26-4.8-4.17-4.95-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .9 2.14.07.15.12.32.02.52-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.26 1.63 2.04 1.12 1 2.06 1.31 2.36 1.46.29.15.46.13.63-.08.17-.2.72-.83.91-1.12.19-.29.38-.24.63-.14.26.1 1.66.78 1.94.92.28.14.47.21.54.33.07.12.07.68-.17 1.36z"/></svg><span>WhatsApp</span></a>
           </div>
         </div>
+      </div>
 
+      <div class="rail" aria-hidden="true">
+        <div class="rail-track">
+          <div class="rail-set"><img src="img/flota_1.png" alt="" loading="lazy"><img src="img/neocalcu_1.png" alt="" loading="lazy"><img src="img/herramientas_1.png" alt="" loading="lazy"><img src="img/neomonitor_1.png" alt="" loading="lazy"><img src="img/egpediatria_1.png" alt="" loading="lazy"><img src="img/constructora_1.png" alt="" loading="lazy"><img src="img/flota_4.png" alt="" loading="lazy"><img src="img/neocalcu_2.png" alt="" loading="lazy"><img src="img/neomonitor_2.png" alt="" loading="lazy"><img src="img/herramientas_2.png" alt="" loading="lazy"></div>
+          <div class="rail-set"><img src="img/flota_1.png" alt="" loading="lazy"><img src="img/neocalcu_1.png" alt="" loading="lazy"><img src="img/herramientas_1.png" alt="" loading="lazy"><img src="img/neomonitor_1.png" alt="" loading="lazy"><img src="img/egpediatria_1.png" alt="" loading="lazy"><img src="img/constructora_1.png" alt="" loading="lazy"><img src="img/flota_4.png" alt="" loading="lazy"><img src="img/neocalcu_2.png" alt="" loading="lazy"><img src="img/neomonitor_2.png" alt="" loading="lazy"><img src="img/herramientas_2.png" alt="" loading="lazy"></div>
+        </div>
       </div>
     </section>
 
-
-    <!-- Work Approach Section -->
-    <section class="approach-section" id="enfoque">
-      <div class="container">
-        
-        <div class="section-header text-center">
-          <span class="section-tag">Criterio de Trabajo</span>
-          <h2 class="section-title">Enfoque Pragmático</h2>
-          <p class="section-subtitle">Entender la necesidad operativa antes de escribir código.</p>
+    <!-- Cómo trabajamos -->
+    <section class="process-section" id="enfoque">
+      <div class="container process-grid">
+        <div class="process-intro">
+          <span class="section-tag">Cómo trabajamos</span>
+          <h2 class="section-title">Primero entendemos el problema. Después escribimos código.</h2>
+          <p class="section-subtitle">Cuatro pasos, siempre en este orden. Cada uno se ve reflejado en un proyecto real más abajo.</p>
         </div>
-
-        <div class="approach-grid">
-          <div class="approach-card">
-            <div class="card-num">01</div>
-            <h4>Problema de Negocio Primero</h4>
-            <p>Identificamos el objetivo de fondo: ahorrar horas de trabajo, eliminar errores manuales o aumentar ventas.</p>
-          </div>
-
-          <div class="approach-card">
-            <div class="card-num">02</div>
-            <h4>Diseñado para Celulares &amp; Escritorio</h4>
-            <p>Garantía de funcionamiento fluido en smartphones y computadoras, adaptado a la forma de trabajo de cada cliente.</p>
-          </div>
-
-          <div class="approach-card">
-            <div class="card-num">03</div>
-            <h4>Interfaces Intuitivas</h4>
-            <p>Desarrollos limpios que no requieran capacitaciones complejas para ser utilizados desde el primer día.</p>
-          </div>
-
-          <div class="approach-card">
-            <div class="card-num">04</div>
-            <h4>Demostración &amp; Pruebas</h4>
-            <p>Entregables progresivos con capturas y datos de prueba para validar la herramienta en situaciones reales.</p>
-          </div>
-        </div>
-
+        <ol class="steps" id="steps">
+          <li class="step" data-reveal>
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <h3>Entender el negocio</h3>
+              <p>Empezamos hablando de tu negocio, no de tecnología: qué tarea te hace perder tiempo, dónde se cometen errores o qué ventas se te escapan. Con eso definimos qué vale la pena resolver.</p>
+              <button type="button" class="step-link" data-project="flota">Flota y Obras: vales de combustible y partes en papel <svg class="arrow-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <h3>Diseñar para cómo se trabaja</h3>
+              <p>Celular o escritorio, con o sin conexión. La herramienta se adapta al lugar donde se usa, no al revés.</p>
+              <button type="button" class="step-link" data-project="neocalcu">NeoCalcu: una calculadora clínica que funciona offline <svg class="arrow-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <h3>Interfaces que no piden capacitación</h3>
+              <p>Pantallas claras, con lo justo. Que cualquiera las use desde el primer día, incluso bajo presión.</p>
+              <button type="button" class="step-link" data-project="egpediatria">EGPediatria: respuestas en segundos en la guardia <svg class="arrow-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <h3>Probar antes de cerrar</h3>
+              <p>Te mostramos avances funcionando, con datos de prueba, antes de seguir. Así corregís a tiempo y no recién al final.</p>
+              <button type="button" class="step-link" data-project="neomonitor">NeoMonitor: una demo que corre sin instalar nada <svg class="arrow-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- Stack Section -->
-    <section class="stack-section" id="stack">
+    <!-- Trabajos -->
+    <section class="work-section" id="proyectos">
       <div class="container">
-        
-        <div class="section-header text-center">
-          <span class="section-tag">Stack Técnico</span>
-          <h2 class="section-title">Herramientas &amp; Tecnologías</h2>
+        <div class="section-head" data-reveal>
+          <span class="section-tag">Resultados</span>
+          <h2 class="section-title">Así se ve en proyectos reales.</h2>
+          <p class="section-subtitle">Capturas reales de aplicaciones en producción.</p>
         </div>
 
-        <div class="stack-grid">
-          <div class="stack-box">
-            <h5>Frontend</h5>
-            <p>HTML5, CSS3, JavaScript ES6+, TypeScript, React.js, Vite, Tailwind CSS.</p>
+        <div class="work" data-reveal>
+          <div class="work-list" role="tablist" aria-label="Proyectos" id="workList">
+          <button type="button" role="tab" class="work-item active" data-project="flota" aria-selected="true">
+            <span class="wi-num">01</span><span class="wi-name">Flota, Depósito y Obras</span><span class="wi-cat">SaaS B2B</span>
+          </button>
+          <button type="button" role="tab" class="work-item" data-project="herramientas" aria-selected="false">
+            <span class="wi-num">02</span><span class="wi-name">Tienda de Herramientas</span><span class="wi-cat">E-Commerce</span>
+          </button>
+          <button type="button" role="tab" class="work-item" data-project="neomonitor" aria-selected="false">
+            <span class="wi-num">03</span><span class="wi-name">NeoMonitor</span><span class="wi-cat">Simulación clínica</span>
+          </button>
+          <button type="button" role="tab" class="work-item" data-project="constructora" aria-selected="false">
+            <span class="wi-num">04</span><span class="wi-name">JL Constructora</span><span class="wi-cat">Institucional</span>
+          </button>
+          <button type="button" role="tab" class="work-item" data-project="neocalcu" aria-selected="false">
+            <span class="wi-num">05</span><span class="wi-name">NeoCalcu</span><span class="wi-cat">App móvil</span>
+          </button>
+          <button type="button" role="tab" class="work-item" data-project="egpediatria" aria-selected="false">
+            <span class="wi-num">06</span><span class="wi-name">EGPediatria</span><span class="wi-cat">App móvil</span>
+          </button>
           </div>
-          <div class="stack-box">
-            <h5>Backend &amp; Cloud</h5>
-            <p>Node.js, Firebase Firestore, Authentication, Cloud Functions, WebSockets, REST APIs.</p>
-          </div>
-          <div class="stack-box">
-            <h5>Mobile &amp; Deploy</h5>
-            <p>Progressive Web Apps (PWA), Capacitor, Vercel, Netlify, Firebase Hosting.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="projects-section" id="proyectos">
-      <div class="container">
-        
-        <div class="section-header text-center">
-          <span class="section-tag">Selección de Trabajos</span>
-          <h2 class="section-title">Algunos Proyectos</h2>
-          <p class="section-subtitle">Galerías de capturas reales de las aplicaciones en producción.</p>
-        </div>
-
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-          <button class="filter-btn active" data-filter="all">Algunos Proyectos</button>
-          <button class="filter-btn" data-filter="b2b">Sistemas B2B</button>
-          <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
-          <button class="filter-btn" data-filter="utilidad">Salud &amp; Mobile</button>
-          <button class="filter-btn" data-filter="landing">Institucionales</button>
-        </div>
-
-        <!-- Projects Grid -->
-        <div class="projects-grid" id="projectsGrid">
-          
-          <!-- PROJECT 1: Flota y Obras (REAL SCREENSHOT GALLERY) -->
-          <article class="project-card" data-category="b2b" data-id="flota">
-            <div class="card-visual">
-              <div class="card-gallery-slider" data-card-gallery="flota">
-                <button class="gallery-arrow prev-arrow" aria-label="Anterior">&lsaquo;</button>
-                <div class="gallery-viewport">
-                  <img src="img/flota_1.png" alt="Captura Real 1" class="gallery-img active">
-                  <img src="img/flota_2.png" alt="Captura Real 2" class="gallery-img">
-                  <img src="img/flota_3.png" alt="Captura Real 3" class="gallery-img">
-                  <img src="img/flota_4.png" alt="Captura Real 4" class="gallery-img">
-                  <img src="img/flota_5.png" alt="Captura Real 5" class="gallery-img">
-                </div>
-                <button class="gallery-arrow next-arrow" aria-label="Siguiente">&rsaquo;</button>
-                <div class="gallery-counter">1 / 5</div>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="card-meta">
-                <span class="category-badge">SaaS B2B / Logística</span>
-                <span class="private-badge">🔒 Acceso Privado</span>
-              </div>
-
-              <h3 class="card-title">Gestión de Flota, Depósito y Obras</h3>
-              <p class="card-desc">Plataforma web a medida para empresas constructoras. Trazabilidad en tiempo real de consumo de combustible, asignación de maquinaria y partes diarios.</p>
-
-              <div class="card-info-table">
-                <div class="info-row">
-                  <span class="i-label">Desafío:</span>
-                  <span class="i-val">Falta de control en vales de combustible y partes en papel.</span>
-                </div>
-                <div class="info-row">
-                  <span class="i-label">Galería:</span>
-                  <span class="i-val accent-val">5 capturas reales de la web actual navegables.</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <div class="tech-tags">
-                  <span>Firebase</span> <span>Node.js</span> <span>Firestore</span>
-                </div>
-                <button class="btn btn-card open-modal-btn" data-project="flota">
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 2: E-Commerce Herramientas (REAL SCREENSHOT GALLERY) -->
-          <article class="project-card" data-category="ecommerce" data-id="herramientas">
-            <div class="card-visual">
-              <div class="card-gallery-slider" data-card-gallery="herramientas">
-                <button class="gallery-arrow prev-arrow" aria-label="Anterior">&lsaquo;</button>
-                <div class="gallery-viewport">
-                  <img src="img/herramientas_1.png" alt="Captura Real 1" class="gallery-img active">
-                  <img src="img/herramientas_2.png" alt="Captura Real 2" class="gallery-img">
-                </div>
-                <button class="gallery-arrow next-arrow" aria-label="Siguiente">&rsaquo;</button>
-                <div class="gallery-counter">1 / 2</div>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="card-meta">
-                <span class="category-badge">E-Commerce / Ventas Online</span>
-                <span class="public-badge">🌐 Acceso Libre</span>
-              </div>
-
-              <h3 class="card-title">E-Commerce &amp; Venta de Herramientas</h3>
-              <p class="card-desc">Tienda online integral para herramientas e insumos profesionales. Carrito de compras, procesamiento de pagos y cálculo automático de envíos por código postal.</p>
-
-              <div class="card-info-table">
-                <div class="info-row">
-                  <span class="i-label">Desafío:</span>
-                  <span class="i-val">Venta online automatizada con cobros y envíos dinámicos.</span>
-                </div>
-                <div class="info-row">
-                  <span class="i-label">Acceso:</span>
-                  <span class="i-val accent-val">Tienda pública en herramientaslibres.web.app</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <div class="tech-tags">
-                  <span>Vite/React</span> <span>MercadoPago</span> <span>Envíos</span>
-                </div>
-                <button class="btn btn-card open-modal-btn" data-project="herramientas">
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 3: JL Constructora SRL (REAL SCREENSHOT GALLERY) -->
-          <article class="project-card" data-category="landing" data-id="constructora">
-            <div class="card-visual">
-              <div class="card-gallery-slider" data-card-gallery="constructora">
-                <button class="gallery-arrow prev-arrow" aria-label="Anterior">&lsaquo;</button>
-                <div class="gallery-viewport">
-                  <img src="img/constructora_1.png" alt="Captura Real 1" class="gallery-img active">
-                  <img src="img/constructora_2.png" alt="Captura Real 2" class="gallery-img">
-                  <img src="img/constructora_3.png" alt="Captura Real 3" class="gallery-img">
-                </div>
-                <button class="gallery-arrow next-arrow" aria-label="Siguiente">&rsaquo;</button>
-                <div class="gallery-counter">1 / 3</div>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="card-meta">
-                <span class="category-badge">Institucional &amp; Licitaciones</span>
-                <span class="public-badge">🌐 Acceso Libre</span>
-              </div>
-
-              <h3 class="card-title">Landing Page — JL Constructora SRL</h3>
-              <p class="card-desc">Sitio web corporativo diseñado para presentar credenciales técnicas ante licitaciones y clientes de proyectos de gran escala.</p>
-
-              <div class="card-info-table">
-                <div class="info-row">
-                  <span class="i-label">Desafío:</span>
-                  <span class="i-val">Presentar portfolio de obras ante licitaciones y clientes corporativos.</span>
-                </div>
-                <div class="info-row">
-                  <span class="i-label">Acceso:</span>
-                  <span class="i-val accent-val">Sitio público en www.jlsrl.com.ar</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <div class="tech-tags">
-                  <span>HTML5</span> <span>CSS3</span> <span>SEO B2B</span>
-                </div>
-                <button class="btn btn-card open-modal-btn" data-project="constructora">
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 4: NeoCalcu (REAL SCREENSHOT GALLERY) -->
-          <article class="project-card" data-category="utilidad" data-id="neocalcu">
-            <div class="card-visual">
-              <div class="card-gallery-slider" data-card-gallery="neocalcu">
-                <button class="gallery-arrow prev-arrow" aria-label="Anterior">&lsaquo;</button>
-                <div class="gallery-viewport">
-                  <img src="img/neocalcu_1.png" alt="Captura Real 1" class="gallery-img active">
-                  <img src="img/neocalcu_2.png" alt="Captura Real 2" class="gallery-img">
-                  <img src="img/neocalcu_3.png" alt="Captura Real 3" class="gallery-img">
-                </div>
-                <button class="gallery-arrow next-arrow" aria-label="Siguiente">&rsaquo;</button>
-                <div class="gallery-counter">1 / 3</div>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="card-meta">
-                <span class="category-badge">App Móvil / Dosificación Neonatal</span>
-              </div>
-
-              <h3 class="card-title">NeoCalcu — Calculadora Neonatal &amp; UCIN</h3>
-              <p class="card-desc">Aplicación clínica progresiva (PWA / Offline) diseñada específicamente para smartphones, con cálculo exacto de dosificación farmacológica neonatal e infusiones.</p>
-
-              <div class="card-info-table">
-                <div class="info-row">
-                  <span class="i-label">Desafío:</span>
-                  <span class="i-val">Eliminar el riesgo de error manual en dosificaciones UCIN.</span>
-                </div>
-                <div class="info-row">
-                  <span class="i-label">Resultado:</span>
-                  <span class="i-val accent-val">Precisión matemática absoluta y respuesta 100% offline.</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <div class="tech-tags">
-                  <span>TypeScript</span> <span>PWA</span> <span>Capacitor</span>
-                </div>
-                <button class="btn btn-card open-modal-btn" data-project="neocalcu">
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 5: EGPediatria (REAL SCREENSHOT GALLERY) -->
-          <article class="project-card" data-category="utilidad" data-id="egpediatria">
-            <div class="card-visual">
-              <div class="card-gallery-slider" data-card-gallery="egpediatria">
-                <button class="gallery-arrow prev-arrow" aria-label="Anterior">&lsaquo;</button>
-                <div class="gallery-viewport">
-                  <img src="img/egpediatria_1.png" alt="Captura Real 1" class="gallery-img active">
-                  <img src="img/egpediatria_2.png" alt="Captura Real 2" class="gallery-img">
-                  <img src="img/egpediatria_3.png" alt="Captura Real 3" class="gallery-img">
-                </div>
-                <button class="gallery-arrow next-arrow" aria-label="Siguiente">&rsaquo;</button>
-                <div class="gallery-counter">1 / 3</div>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="card-meta">
-                <span class="category-badge">App Móvil / Emergencias Pediátricas</span>
-              </div>
-
-              <h3 class="card-title">EGPediatria — Estoy de Guardia Pediatría</h3>
-              <p class="card-desc">Herramienta clínica interactiva optimizada para smartphones. Tablas de dosificación, diluciones de inotrópicos y protocolos de emergencia según guías SAP/PALS.</p>
-
-              <div class="card-info-table">
-                <div class="info-row">
-                  <span class="i-label">Desafío:</span>
-                  <span class="i-val">Respuesta inmediata en urgencias pediátricas bajo estrés.</span>
-                </div>
-                <div class="info-row">
-                  <span class="i-label">Resultado:</span>
-                  <span class="i-val accent-val">Cálculo de volumen a extraer e instrucciones de dilución.</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <div class="tech-tags">
-                  <span>JavaScript</span> <span>PWA</span> <span>SAP / PALS</span>
-                </div>
-                <button class="btn btn-card open-modal-btn" data-project="egpediatria">
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 6: NeoMonitor (REAL SCREENSHOT GALLERY) -->
-          <article class="project-card" data-category="utilidad" data-id="neomonitor">
-            <div class="card-visual">
-              <div class="card-gallery-slider" data-card-gallery="neomonitor">
-                <button class="gallery-arrow prev-arrow" aria-label="Anterior">&lsaquo;</button>
-                <div class="gallery-viewport">
-                  <img src="img/neomonitor_1.png" alt="Captura Real 1" class="gallery-img active">
-                  <img src="img/neomonitor_2.png" alt="Captura Real 2" class="gallery-img">
-                </div>
-                <button class="gallery-arrow next-arrow" aria-label="Siguiente">&rsaquo;</button>
-                <div class="gallery-counter">1 / 2</div>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="card-meta">
-                <span class="category-badge">Simulación / Multi-Dispositivo</span>
-              </div>
-
-              <h3 class="card-title">NeoMonitor — Simulador Virtual de Monitor</h3>
-              <p class="card-desc">Plataforma de simulación clínica multiparamétrica. Convierte cualquier pantalla o Smart TV en monitor controlado en tiempo real desde un smartphone vía WebSockets para talleres de RCP/NRP.</p>
-
-              <div class="card-info-table">
-                <div class="info-row">
-                  <span class="i-label">Desafío:</span>
-                  <span class="i-val">Reemplazar equipamiento físico costoso para simulación.</span>
-                </div>
-                <div class="info-row">
-                  <span class="i-label">Resultado:</span>
-                  <span class="i-val accent-val">Sincronización en milisegundos y control remoto total.</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <div class="tech-tags">
-                  <span>Node.js</span> <span>WebSockets</span> <span>Realtime</span>
-                </div>
-                <button class="btn btn-card open-modal-btn" data-project="neomonitor">
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </article>
-
+          <article class="work-panel" id="workPanel" aria-live="polite"></article>
         </div>
       </div>
     </section>
@@ -462,7 +153,7 @@
     <!-- Contact CTA Section -->
     <section class="contact-section" id="contacto">
       <div class="container">
-        <div class="contact-card text-center">
+        <div class="contact-card text-center" data-reveal>
           <h2 class="contact-title">¿Tenés una idea o proyecto para desarrollar?</h2>
           <p class="contact-desc">Podemos analizar la necesidad operativa de tu negocio y definir el alcance técnico ideal.</p>
 
@@ -491,72 +182,17 @@
         Tel. <a href="tel:+5491125395150">+54 9 11 2539-5150</a> &middot; <a href="mailto:info@dastudio.com.ar">info@dastudio.com.ar</a></p>
       <p class="footer-legal-links"><a href="/privacidad/">Política de Privacidad</a> &middot; <a href="/terminos/">Términos y Condiciones</a></p>
       <div class="footer-social">
-        <a href="https://www.instagram.com/dastudioweb/" target="_blank" rel="noopener" aria-label="DAStudio en Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <a href="https://www.instagram.com/dastudioweb/" target="_blank" rel="noopener" aria-label="DAStudio en Instagram: @dastudioweb" class="footer-ig">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="#e1306c" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4.2" stroke="#e1306c" stroke-width="2"/>
+            <circle cx="17.6" cy="6.4" r="1.2" fill="#e1306c"/>
+          </svg>
+          <span>@dastudioweb</span>
         </a>
       </div>
     </div>
   </footer>
-
-  <!-- CASE STUDY MODAL -->
-  <div class="modal-overlay" id="caseStudyModal">
-    <div class="modal-window">
-      <button class="modal-close" id="modalCloseBtn" aria-label="Cerrar">&times;</button>
-      
-      <div class="modal-header">
-        <span class="modal-badge" id="modalBadge">SaaS B2B</span>
-        <h2 class="modal-title" id="modalTitle">Título del Proyecto</h2>
-        <div class="modal-tags" id="modalTags"></div>
-      </div>
-
-      <div class="modal-tabs">
-        <button class="modal-tab-btn active" data-tab="desafio">1. El Desafío</button>
-        <button class="modal-tab-btn" data-tab="solucion">2. La Solución</button>
-        <button class="modal-tab-btn" data-tab="capturas">3. Galería de Capturas</button>
-        <button class="modal-tab-btn" data-tab="acceso">4. Información de Acceso</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="tab-content active" id="tab-desafio">
-          <div class="info-card warning-card">
-            <h4>📌 Problema Inicial</h4>
-            <p id="modalDesafioText"></p>
-          </div>
-        </div>
-
-        <div class="tab-content" id="tab-solucion">
-          <div class="info-card success-card">
-            <h4>💡 Solución Desarrollada</h4>
-            <p id="modalSolucionText"></p>
-          </div>
-        </div>
-
-        <div class="tab-content" id="tab-capturas">
-          <div class="info-card">
-            <h4>📸 Galería de Capturas de la Web Actual</h4>
-            <p style="font-size:0.85rem; margin-top:0.3rem;">Explora las pantallas de la aplicación en producción (hacé clic en cualquier imagen para ampliarla):</p>
-            <div class="screenshot-gallery" id="modalGalleryGrid"></div>
-          </div>
-        </div>
-
-        <div class="tab-content" id="tab-acceso">
-          <div class="info-card auth-card">
-            <h4>🔒 Nivel de Acceso &amp; Credenciales</h4>
-            <p id="modalAccessNotes"></p>
-            <div class="demo-cred-box" id="demoCredentialsBox"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <a href="https://wa.me/5491125395150" id="modalDemoLink" target="_blank" rel="noopener" aria-label="DAStudio en WhatsApp" class="btn btn-primary btn-sm">
-          <span>Consultar por este Proyecto</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <button class="btn btn-secondary btn-sm" id="modalCloseBottomBtn">Cerrar</button>
-      </div>
-    </div>
-  </div>
 
   <!-- IMAGE LIGHTBOX -->
   <div class="lightbox-overlay" id="imageLightbox">
@@ -709,6 +345,6 @@
     <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38c1.46.8 3.1 1.22 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm5.8 14.15c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.91-1.26-4.8-4.17-4.95-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .9 2.14.07.15.12.32.02.52-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.26 1.63 2.04 1.12 1 2.06 1.31 2.36 1.46.29.15.46.13.63-.08.17-.2.72-.83.91-1.12.19-.29.38-.24.63-.14.26.1 1.66.78 1.94.92.28.14.47.21.54.33.07.12.07.68-.17 1.36z"/></svg>
   </a>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20261112"></script>
 </body>
 </html>
