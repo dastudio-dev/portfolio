@@ -15,10 +15,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Servidor Local de Previsualización
 ```bash
-python3 -m http.server 8080 --directory /home/diegosteinberg/portfolio
+python3 -m http.server 8080 --directory /home/diego/Soft/repos/portfolio
 ```
 
 ### Git & Deploy
+El remoto `origin` debe ser `https://github.com/dastudio-dev/portfolio.git` (el nombre viejo `diegoastein/portfolio` solo redirige). Verificar con `git remote -v` antes de pushear.
 ```bash
 git add .
 git commit -m "Descripción del cambio"
