@@ -71,7 +71,9 @@ Ootto (its subscription is not needed): only Claude, GitHub and Metricool (free 
 - Never schedule without Diego approving the reel and caption (new content); never paraphrase a caption.
 - Keep the brand rules of the repo CLAUDE.md (marca neutra DAStudio, no exposed domains).
 - Dates cannot be in the past. Times are local Buenos Aires.
-- Not verified: whether Metricool retries a failed auto-publish; check the calendar the day of the first post.
+- Verified 2026-11-06 (Diego): Metricool auto-publish works. Not verified: whether it retries a failed auto-publish.
+- Reels made outside this repo (Ootto, etc.) live in Drive `Externos/` and are tracked by the
+  `portfolio-externos` skill; they count against the same 20 posts/month.
 
 ## Limits
 - 3 posts/week needs ~12 pieces/month; if there are fewer reels, space them out or alternate
