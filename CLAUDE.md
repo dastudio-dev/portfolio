@@ -57,3 +57,19 @@ git push origin main
 - Los datos de cada proyecto viven en `script.js` (objeto `projects`).
 
 ---
+
+## 6. Herramientas Internas (no se publican)
+
+La carpeta `herramientas/` guarda utilidades de trabajo que **no son parte del sitio**. Lleva un `.htaccess` que bloquea su acceso, porque el deploy copia el repositorio completo: todo lo que entra a `main` queda publicado en dastudio.com.ar. Nunca versionar ahí datos de clientes ni de prospectos.
+
+- `herramientas/panel-prospeccion/`: generador del panel de la campaña de contacto en frío. `plantilla.html` es la página sin datos y `generar.py` la completa leyendo la pestaña `Prospectos` de la planilla de seguimiento. El HTML con datos no se versiona: se publica como artefacto privado. Instrucciones y enlaces en su `README.md`.
+
+---
+
+## Qué vive fuera de este repositorio
+
+La captación de clientes no está en el código; no buscarla acá:
+
+- **Prospectos y su estado**: la planilla "Seguimiento DAStudio" en Drive, pestaña `Prospectos`. Es la fuente de verdad del estado de cada empresa (contactada, respondió, sin forma de contacto) y de los mensajes que se le mandan a cada una.
+- **Agenda diaria de contactos**: una routine en la nube, "DAStudio - Prospección diaria", que corre a las 9:05 de lunes a viernes: completa los mensajes y los links de contacto en la planilla y le manda a Diego el lote del día por mail. No contacta a nadie: el envío lo hace Diego.
+- **Reels y su programación**: los skills `portfolio-reel`, `portfolio-externos` y `portfolio-schedule`.

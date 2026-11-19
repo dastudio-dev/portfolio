@@ -1,0 +1,655 @@
+<title>Prospección DAStudio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  /* Layout: una columna de fichas operables, con cabecera fija de contadores. */
+  :root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --card-2: #eef1f6;
+    --line: #d9dee7;
+    --fg: #121821;
+    --fg-soft: #5b6678;
+    --accent: #1d4ed8;
+    --accent-soft: #e6ecfd;
+    --on-accent: #ffffff;
+    --ok: #15803d;
+    --ok-soft: #e3f3e8;
+    --warn: #b45309;
+    --warn-soft: #fcefdc;
+    --off: #6b7280;
+    --display: "Space Grotesk", "Trebuchet MS", sans-serif;
+    --body: "Inter", system-ui, -apple-system, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117;
+      --card: #161b22;
+      --card-2: #1c222b;
+      --line: #30363d;
+      --fg: #e6edf3;
+      --fg-soft: #9aa7b6;
+      --accent: #38bdf8;
+      --accent-soft: #10263a;
+      --on-accent: #0b1016;
+      --ok: #4ade80;
+      --ok-soft: #10281a;
+      --warn: #fbbf24;
+      --warn-soft: #2a2010;
+      --off: #8b949e;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-2: #1c222b;
+    --line: #30363d;
+    --fg: #e6edf3;
+    --fg-soft: #9aa7b6;
+    --accent: #38bdf8;
+    --accent-soft: #10263a;
+    --on-accent: #0b1016;
+    --ok: #4ade80;
+    --ok-soft: #10281a;
+    --warn: #fbbf24;
+    --warn-soft: #2a2010;
+    --off: #8b949e;
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); line-height: 1.5; }
+  * { box-sizing: border-box; }
+
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    z-index: 10; background: var(--card);
+  }
+
+  .wrap {
+    max-width: 44rem; margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 3rem;
+  }
+
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0.85rem 0.7rem;
+  }
+  h1 { font-family: var(--display); font-size: 1.12rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+  .sub { font-size: 0.78rem; color: var(--fg-soft); margin-top: 0.1rem; }
+  .counts { display: flex; gap: 0.4rem; margin-top: 0.7rem; flex-wrap: wrap; }
+  .count {
+    flex: 1 1 5rem; min-width: 0; background: var(--card-2); border: 1px solid var(--line);
+    border-radius: 9px; padding: 0.45rem 0.55rem;
+    font: inherit; color: inherit; text-align: left; cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+  }
+  .count:hover { border-color: var(--accent); }
+  .count[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .count[aria-pressed="true"] b { color: var(--accent); }
+  .count b { display: block; font-family: var(--display); font-size: 1.2rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .count span { font-size: 0.68rem; color: var(--fg-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  h2 {
+    font-family: var(--display); font-size: 1.08rem; font-weight: 700; letter-spacing: -0.01em;
+    color: var(--fg); margin: 1.9rem 0 0.85rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 0.8rem; background: var(--accent-soft);
+    border: 1px solid var(--accent); border-left: 4px solid var(--accent); border-radius: 10px;
+  }
+  h2.alert { background: var(--warn-soft); border-color: var(--warn); border-left-color: var(--warn); }
+  h2 .n {
+    margin-left: auto; font-family: var(--mono); font-size: 0.74rem; font-weight: 500;
+    color: var(--fg-soft); font-variant-numeric: tabular-nums; text-align: right;
+  }
+  h2.alert .n { color: var(--warn); }
+
+  .filters { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .filters button {
+    font: inherit; font-size: 0.76rem; padding: 0.3rem 0.65rem; border-radius: 99px;
+    border: 1px solid var(--line); background: var(--card); color: var(--fg-soft); cursor: pointer;
+  }
+  .filters button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  .cards { display: flex; flex-direction: column; gap: 0.7rem; }
+  article {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 0.85rem; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  article.done { opacity: 0.62; }
+  article.vence { border-left: 3px solid var(--warn); }
+
+  .head { display: flex; justify-content: space-between; gap: 0.5rem; align-items: start; }
+  .name { font-family: var(--display); font-size: 1rem; font-weight: 700; margin: 0; min-width: 0; }
+  .where { font-size: 0.76rem; color: var(--fg-soft); }
+  .chips { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .chip {
+    font-family: var(--mono); font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 5px;
+    background: var(--card-2); color: var(--fg-soft); border: 1px solid var(--line); white-space: nowrap;
+  }
+  .chip.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+  .chip.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+  .chip.off { background: transparent; color: var(--off); }
+
+  details.vi { font-size: 0.82rem; color: var(--fg-soft); }
+  details.vi summary { cursor: pointer; color: var(--accent); font-size: 0.78rem; }
+  details.vi p { margin: 0.4rem 0 0; }
+
+  pre.msg {
+    font-family: var(--body); font-size: 0.82rem; white-space: pre-wrap; margin: 0;
+    background: var(--card-2); border: 1px solid var(--line); border-radius: 9px;
+    padding: 0.6rem; max-height: 9rem; overflow-y: auto; min-width: 0;
+  }
+
+  .acts { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .acts a, .acts button {
+    font: inherit; font-size: 0.8rem; font-weight: 500; padding: 0.42rem 0.7rem; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--card-2); color: var(--fg); cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
+  }
+  .acts a.go { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .marks { display: flex; gap: 0.4rem; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 0.6rem; }
+  .marks button {
+    font: inherit; font-size: 0.8rem; font-weight: 600; padding: 0.42rem 0.75rem; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--card); color: var(--fg-soft); cursor: pointer;
+  }
+  .marks button.send { border-color: var(--ok); color: var(--ok); }
+  .marks button.rep { border-color: var(--accent); color: var(--accent); }
+  .marks button.undo { color: var(--off); }
+  .marks .state { font-size: 0.8rem; color: var(--ok); font-weight: 600; align-self: center; margin-right: auto; }
+  button:disabled { opacity: 0.5; cursor: default; }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .note {
+    font-size: 0.78rem; color: var(--fg-soft); background: var(--card-2);
+    border: 1px solid var(--line); border-radius: 9px; padding: 0.55rem 0.7rem; margin-top: 0.9rem;
+  }
+  .note.warn { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); }
+  details.rest { margin-top: 1.6rem; }
+  details.rest summary { font-family: var(--display); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-soft); cursor: pointer; }
+  details.rest ul { margin: 0.7rem 0 0; padding-left: 1.1rem; font-size: 0.84rem; color: var(--fg-soft); }
+  details.rest li { margin-bottom: 0.3rem; }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 20;
+    background: var(--fg); color: var(--bg); font-size: 0.82rem; font-weight: 600;
+    padding: 0.5rem 0.9rem; border-radius: 99px; transition: opacity 0.2s;
+  }
+  .toast[hidden] { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Prospección DAStudio</h1>
+    <div class="sub" id="sub">Transporte y obras · lote del día</div>
+    <div class="counts" id="counts">
+      <button class="count" type="button" aria-pressed="false" data-f="pend" data-to="s-pend"><b id="c-pend">—</b><span>por contactar</span></button>
+      <button class="count" type="button" aria-pressed="false" data-f="enviado" data-to="s-pend"><b id="c-env">—</b><span>enviados</span></button>
+      <button class="count" type="button" aria-pressed="false" data-f="respondio" data-to="s-pend"><b id="c-resp">—</b><span>respondieron</span></button>
+      <button class="count" type="button" data-to="s-seg"><b id="c-seg">—</b><span>para seguir hoy</span></button>
+    </div>
+  </header>
+
+  <section id="s-seg" hidden>
+    <h2 id="h-seg">Seguimientos <span class="n" id="n-seg"></span></h2>
+    <div class="cards" id="segs"></div>
+  </section>
+
+  <section id="s-pend">
+    <h2>Para contactar <span class="n" id="n-pend"></span></h2>
+    <div class="filters" id="filters">
+      <button type="button" data-f="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-f="pend" aria-pressed="false">Sin registrar</button>
+      <button type="button" data-f="enviado" aria-pressed="false">Enviados</button>
+      <button type="button" data-f="respondio" aria-pressed="false">Respondieron</button>
+      <button type="button" data-f="wa" aria-pressed="false">WhatsApp</button>
+      <button type="button" data-f="email" aria-pressed="false">Email</button>
+      <button type="button" data-f="ig" aria-pressed="false">Instagram</button>
+    </div>
+    <div class="cards" id="lista"></div>
+  </section>
+
+  <div class="note" id="estado-db">Conectando con el registro…</div>
+
+  <details class="rest">
+    <summary id="rest-sum">Sin forma de contacto</summary>
+    <ul id="rest-list"></ul>
+  </details>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script type="application/json" id="datos">__DATOS__</script>
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("datos").textContent);
+  var PEND = DATA.pendientes, CONT = DATA.contactadas, SIN = DATA.sinContacto;
+  var registros = Object.create(null);
+  var db = null, puedeEscribir = null, filtro = "todas", enVuelo = Object.create(null);
+
+  var $ = function (id) { return document.getElementById(id); };
+  var toastT = null;
+  function toast(txt) {
+    var t = $("toast");
+    t.textContent = txt; t.hidden = false;
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { t.hidden = true; }, 2200);
+  }
+
+  function hoy() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+
+  // De "WhatsApp y email el 17/11. Seguimiento 1 el 20/11" toma la fecha del
+  // SEGUIMIENTO (la que sigue a esa palabra), nunca la del envío.
+  function fechaDeAccion(txt) {
+    txt = txt || "";
+    var m = /eguimiento[^0-9]*(\d{1,2})\/(\d{1,2})/.exec(txt);
+    if (!m) {
+      var todas = txt.match(/\d{1,2}\/\d{1,2}/g);
+      if (!todas) return null;
+      m = /(\d{1,2})\/(\d{1,2})/.exec(todas[todas.length - 1]);
+    }
+    var r = new Date(new Date().getFullYear(), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+    r.setHours(0, 0, 0, 0);
+    return r;
+  }
+
+  function dm(d) {
+    return d ? ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) : "";
+  }
+
+  function fmtFecha(iso) {
+    var m = /(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+    return m ? m[3] + "/" + m[2] : (iso || "");
+  }
+
+  function waLink(p) {
+    return "https://wa.me/" + p.wa + "?text=" + encodeURIComponent(p.msg);
+  }
+
+  function copiar(txt, btn) {
+    var hecho = function () { toast("Copiado"); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(hecho, function () { seleccionar(btn); });
+        return;
+      }
+    } catch (e) { /* sigue al fallback */ }
+    seleccionar(btn);
+  }
+  function seleccionar(btn) {
+    var card = btn.closest("article");
+    var pre = card && card.querySelector("pre.msg");
+    if (!pre) { toast("No se pudo copiar"); return; }
+    var r = document.createRange(); r.selectNodeContents(pre);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    toast("Seleccionado: copiá con el teclado");
+  }
+
+  function reg(row) { return registros["f" + row] || null; }
+
+  async function marcar(p, estado) {
+    var key = "f" + p.row;
+    if (enVuelo[key]) return;
+    if (!db) { toast("Sin registro disponible"); return; }
+    enVuelo[key] = true;
+    render();
+    try {
+      if (estado === null) {
+        await db.collection("registros").doc(key).delete();
+      } else {
+        await db.collection("registros").doc(key).set({
+          row: p.row, empresa: p.empresa, canal: p.canal || "", estado: estado,
+          version: p.ver || "", fecha: new Date().toISOString().slice(0, 10),
+          ts: Date.now()
+        });
+      }
+      toast(estado === null ? "Marca borrada" : "Registrado");
+    } catch (e) {
+      var c = e && e.code;
+      if (c === "invalid_argument") { puedeEscribir = false; toast("No tenés permiso para registrar"); }
+      else if (c === "quota_exceeded") toast("El registro está lleno");
+      else toast("No se pudo guardar, probá de nuevo");
+    } finally {
+      delete enVuelo[key];
+      render();
+    }
+  }
+
+  function tarjetaPendiente(p) {
+    var r = reg(p.row);
+    var art = document.createElement("article");
+    if (r) art.className = "done";
+
+    var head = document.createElement("div");
+    head.className = "head";
+    var left = document.createElement("div");
+    left.style.minWidth = "0";
+    var h3 = document.createElement("h3");
+    h3.className = "name"; h3.textContent = p.empresa;
+    var w = document.createElement("div");
+    w.className = "where"; w.textContent = p.ciudad;
+    left.appendChild(h3); left.appendChild(w);
+    var chips = document.createElement("div");
+    chips.className = "chips";
+    (p.canal || "").split(",").forEach(function (c) {
+      c = c.trim(); if (!c) return;
+      var s = document.createElement("span"); s.className = "chip"; s.textContent = c; chips.appendChild(s);
+    });
+    if (p.ver) {
+      var v = document.createElement("span");
+      v.className = "chip off"; v.textContent = p.ver.charAt(0);
+      v.title = "Versión del mensaje: " + p.ver;
+      chips.appendChild(v);
+    }
+    head.appendChild(left); head.appendChild(chips);
+    art.appendChild(head);
+
+    if (p.vi) {
+      var det = document.createElement("details");
+      det.className = "vi";
+      var sum = document.createElement("summary"); sum.textContent = "Qué vi";
+      var pp = document.createElement("p"); pp.textContent = p.vi;
+      det.appendChild(sum); det.appendChild(pp);
+      art.appendChild(det);
+    }
+
+    var pre = document.createElement("pre");
+    pre.className = "msg"; pre.textContent = p.msg;
+    art.appendChild(pre);
+
+    var acts = document.createElement("div");
+    acts.className = "acts";
+    if (p.wa) {
+      var a = document.createElement("a");
+      a.className = "go"; a.href = waLink(p); a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Abrir WhatsApp";
+      acts.appendChild(a);
+    }
+    if (p.ig) {
+      var ai = document.createElement("a");
+      ai.href = "https://ig.me/m/" + p.ig; ai.target = "_blank"; ai.rel = "noopener";
+      ai.textContent = "Instagram";
+      acts.appendChild(ai);
+    }
+    var bc = document.createElement("button");
+    bc.type = "button"; bc.textContent = "Copiar mensaje";
+    bc.addEventListener("click", function () { copiar(p.msg, bc); });
+    acts.appendChild(bc);
+    if (p.email) {
+      var be = document.createElement("button");
+      be.type = "button"; be.textContent = p.email;
+      be.style.fontFamily = "var(--mono)"; be.style.fontSize = "0.72rem";
+      be.addEventListener("click", function () { copiar(p.email, be); });
+      acts.appendChild(be);
+    }
+    art.appendChild(acts);
+
+    var marks = document.createElement("div");
+    marks.className = "marks";
+    var busy = !!enVuelo["f" + p.row];
+    if (r) {
+      var st = document.createElement("span");
+      st.className = "state";
+      st.textContent = ({ enviado: "Enviado", respondio: "Respondió", no_va: "No va" }[r.estado] || r.estado) +
+        (r.fecha ? " · " + fmtFecha(r.fecha) : "");
+      marks.appendChild(st);
+      if (r.estado === "enviado") {
+        var br = document.createElement("button");
+        br.type = "button"; br.className = "rep"; br.textContent = "Respondió"; br.disabled = busy;
+        br.addEventListener("click", function () { marcar(p, "respondio"); });
+        marks.appendChild(br);
+      }
+      var bu = document.createElement("button");
+      bu.type = "button"; bu.className = "undo"; bu.textContent = "Deshacer"; bu.disabled = busy;
+      bu.addEventListener("click", function () { marcar(p, null); });
+      marks.appendChild(bu);
+    } else {
+      [["enviado", "Enviado", "send"], ["respondio", "Respondió", "rep"], ["no_va", "No va", ""]].forEach(function (x) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = x[2]; b.textContent = x[1];
+        b.disabled = busy || puedeEscribir === false || !db;
+        b.addEventListener("click", function () { marcar(p, x[0]); });
+        marks.appendChild(b);
+      });
+    }
+    art.appendChild(marks);
+    return art;
+  }
+
+  function tarjetaSeguimiento(c) {
+    var r = reg(c.row);
+    var art = document.createElement("article");
+    var venc = fechaDeAccion(c.accion);
+    var vencida = venc && venc <= hoy();
+    if (vencida && !r) art.className = "vence";
+    if (r) art.className = "done";
+
+    var head = document.createElement("div");
+    head.className = "head";
+    var left = document.createElement("div"); left.style.minWidth = "0";
+    var h3 = document.createElement("h3"); h3.className = "name"; h3.textContent = c.empresa;
+    var w = document.createElement("div"); w.className = "where";
+    w.textContent = c.ciudad + " · primer mensaje " + fmtFecha(c.primer);
+    left.appendChild(h3); left.appendChild(w);
+    var chips = document.createElement("div"); chips.className = "chips";
+    var ch = document.createElement("span");
+    ch.className = "chip " + (r ? "ok" : (vencida ? "warn" : "off"));
+    ch.textContent = r ? "hecho" : (venc ? (vencida ? "escribir ya · " + dm(venc) : "toca el " + dm(venc)) : "sin fecha");
+    chips.appendChild(ch);
+    head.appendChild(left); head.appendChild(chips);
+    art.appendChild(head);
+
+    if (c.accion) {
+      var pp = document.createElement("div");
+      pp.className = "where"; pp.textContent = c.accion;
+      art.appendChild(pp);
+    }
+
+    var acts = document.createElement("div");
+    acts.className = "acts";
+    if (c.wa) {
+      var a = document.createElement("a");
+      a.className = "go"; a.href = "https://wa.me/" + c.wa; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Abrir WhatsApp";
+      acts.appendChild(a);
+    }
+    if (c.email) {
+      var be = document.createElement("button");
+      be.type = "button"; be.textContent = c.email;
+      be.style.fontFamily = "var(--mono)"; be.style.fontSize = "0.72rem";
+      be.addEventListener("click", function () { copiar(c.email, be); });
+      acts.appendChild(be);
+    }
+    if (acts.childNodes.length) art.appendChild(acts);
+
+    var marks = document.createElement("div");
+    marks.className = "marks";
+    var busy = !!enVuelo["f" + c.row];
+    if (r) {
+      var st = document.createElement("span");
+      st.className = "state";
+      st.textContent = (r.estado === "seguimiento" ? "Seguimiento hecho" : r.estado) + (r.fecha ? " · " + fmtFecha(r.fecha) : "");
+      marks.appendChild(st);
+      var bu = document.createElement("button");
+      bu.type = "button"; bu.className = "undo"; bu.textContent = "Deshacer"; bu.disabled = busy;
+      bu.addEventListener("click", function () { marcar(c, null); });
+      marks.appendChild(bu);
+    } else {
+      var b1 = document.createElement("button");
+      b1.type = "button"; b1.className = "send"; b1.textContent = "Seguimiento hecho";
+      b1.disabled = busy || puedeEscribir === false || !db;
+      b1.addEventListener("click", function () { marcar(c, "seguimiento"); });
+      marks.appendChild(b1);
+      var b2 = document.createElement("button");
+      b2.type = "button"; b2.className = "rep"; b2.textContent = "Respondió";
+      b2.disabled = busy || puedeEscribir === false || !db;
+      b2.addEventListener("click", function () { marcar(c, "respondio"); });
+      marks.appendChild(b2);
+    }
+    art.appendChild(marks);
+    return art;
+  }
+
+  function pasaFiltro(p) {
+    if (filtro === "todas") return true;
+    if (filtro === "pend") return !reg(p.row);
+    if (filtro === "enviado" || filtro === "respondio") {
+      var rr = reg(p.row);
+      return !!rr && rr.estado === filtro;
+    }
+    var canal = (p.canal || "").toLowerCase();
+    if (filtro === "wa") return !!p.wa;
+    if (filtro === "email") return canal.indexOf("email") >= 0 && !!p.email;
+    if (filtro === "ig") return !!p.ig;
+    return true;
+  }
+
+  function render() {
+    var lista = $("lista");
+    lista.textContent = "";
+    var visibles = PEND.filter(pasaFiltro);
+    visibles.forEach(function (p) { lista.appendChild(tarjetaPendiente(p)); });
+    if (!visibles.length) {
+      var v = document.createElement("div");
+      v.className = "note"; v.textContent = "Nada con ese filtro.";
+      lista.appendChild(v);
+    }
+
+    var segs = $("segs");
+    segs.textContent = "";
+    var pendientesSeg = CONT.slice().sort(function (a, b) {
+      var fa = fechaDeAccion(a.accion), fb = fechaDeAccion(b.accion);
+      return (fa ? fa.getTime() : 0) - (fb ? fb.getTime() : 0);
+    });
+    pendientesSeg.forEach(function (c) { segs.appendChild(tarjetaSeguimiento(c)); });
+    $("s-seg").hidden = !pendientesSeg.length;
+
+    var marcadas = 0, resp = 0, segHechos = 0, vencidos = 0;
+    Object.keys(registros).forEach(function (k) {
+      var e = registros[k].estado;
+      if (e === "enviado") marcadas++;
+      else if (e === "respondio") resp++;
+      else if (e === "seguimiento") segHechos++;
+    });
+    CONT.forEach(function (c) {
+      var f = fechaDeAccion(c.accion);
+      if (f && f <= hoy() && !reg(c.row)) vencidos++;
+    });
+    var sinRegistrar = PEND.filter(function (p) { return !reg(p.row); }).length;
+    $("c-pend").textContent = sinRegistrar;
+    $("c-env").textContent = marcadas + segHechos;
+    $("c-resp").textContent = resp;
+    $("c-seg").textContent = vencidos;
+    $("sub").textContent = PEND.length + " con mensaje listo · " + CONT.length + " contactadas";
+
+    $("n-pend").textContent = sinRegistrar ? "faltan " + sinRegistrar + " de " + PEND.length : "todas registradas";
+    $("n-seg").textContent = vencidos
+      ? vencidos + (vencidos === 1 ? " para escribir hoy" : " para escribir hoy")
+      : pendientesSeg.length + " agendados";
+    $("h-seg").classList.toggle("alert", vencidos > 0);
+  }
+
+  // Lista de las trabadas
+  (function () {
+    $("rest-sum").textContent = "Sin forma de contacto (" + SIN.length + ")";
+    var ul = $("rest-list");
+    SIN.forEach(function (s) {
+      var li = document.createElement("li");
+      li.textContent = s.empresa + (s.ciudad ? " — " + s.ciudad : "") + (s.accion ? ". " + s.accion : "");
+      ul.appendChild(li);
+    });
+  })();
+
+  function setFiltro(f) {
+    filtro = f;
+    Array.prototype.forEach.call(document.querySelectorAll("#filters button[data-f], .count[data-f]"), function (x) {
+      x.setAttribute("aria-pressed", x.getAttribute("data-f") === f ? "true" : "false");
+    });
+    render();
+  }
+
+  function irA(id) {
+    var sec = document.getElementById(id);
+    if (!sec) return;
+    var quieto = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    sec.scrollIntoView({ behavior: quieto ? "auto" : "smooth", block: "start" });
+  }
+
+  $("filters").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button[data-f]");
+    if (b) setFiltro(b.getAttribute("data-f"));
+  });
+
+  $("counts").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button");
+    if (!b) return;
+    var f = b.getAttribute("data-f");
+    if (f) setFiltro(filtro === f ? "todas" : f);
+    irA(b.getAttribute("data-to"));
+  });
+
+  render();
+
+  // Registro compartido
+  (async function () {
+    var nota = $("estado-db");
+    var tarde = setTimeout(function () {
+      nota.className = "note warn";
+      nota.textContent = "El registro todavía no responde. Podés mandar igual; marcá cuando vuelva.";
+    }, 10000);
+
+    var u = null;
+    try { u = await claude.use("user"); } catch (e) { u = null; }
+    if (u) {
+      try {
+        var w = await u.can("data.write");
+        if (w === false) puedeEscribir = false;
+        else if (w === true) puedeEscribir = true;
+      } catch (e) { /* sin dato */ }
+    }
+
+    try { db = await claude.use("db"); } catch (e) { db = null; }
+    if (!db) {
+      clearTimeout(tarde);
+      nota.className = "note warn";
+      nota.textContent = "Sin registro en este dispositivo: los mensajes y links funcionan, pero no puedo guardar las marcas.";
+      render();
+      return;
+    }
+
+    db.collection("registros").onSnapshot(function (snap) {
+      var next = Object.create(null);
+      snap.docs.forEach(function (d) {
+        var v = d.data();
+        if (v) next[d.id] = v;
+      });
+      registros = next;
+      if (!snap.metadata.fromCache) {
+        clearTimeout(tarde);
+        nota.className = "note";
+        nota.textContent = puedeEscribir === false
+          ? "Podés ver todo, pero este usuario no tiene permiso para registrar."
+          : "Registro conectado. Lo que marques acá lo paso a la planilla.";
+      }
+      render();
+    }, function (err) {
+      clearTimeout(tarde);
+      nota.className = "note warn";
+      nota.textContent = err && err.code === "revoked"
+        ? "Se cortó el acceso al registro. Recargá la página."
+        : "No pude leer el registro. Los mensajes y links siguen funcionando.";
+      render();
+    });
+  })();
+})();
+</script>
