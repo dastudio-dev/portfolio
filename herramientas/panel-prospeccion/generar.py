@@ -28,6 +28,7 @@ PLANTILLA = AQUI / "plantilla.html"
 EMPRESA, RUBRO, CIUDAD, CONTACTO, CANAL, DATO = 0, 1, 2, 3, 4, 5
 COMO, VI, PRIMER, SEG1, SEG2, ESTADO, ACCION, NOTA, MSG = 6, 7, 8, 9, 10, 11, 12, 13, 14
 VERSION = 19  # columna T
+SEGMSG = 20  # columna U: mensaje del primer seguimiento
 
 
 def celda(fila, i):
@@ -85,6 +86,7 @@ def armar(crudo):
             "accion": celda(fila, ACCION),
             "msg": celda(fila, MSG),
             "ver": celda(fila, VERSION),
+            "seg": celda(fila, SEGMSG),
         })
 
     pendientes = [e for e in empresas if e["estado"] == "Por contactar"]
@@ -93,7 +95,8 @@ def armar(crudo):
 
     return {
         "pendientes": pendientes,
-        # Las contactadas no llevan el mensaje: lo que les falta es el seguimiento.
+        # Las contactadas no llevan el primer mensaje (columna O), sino el del
+        # seguimiento (columna U).
         "contactadas": [{k: v for k, v in c.items() if k != "msg"} for c in contactadas],
         "sinContacto": [
             {"empresa": s["empresa"], "ciudad": s["ciudad"], "accion": s["accion"]}

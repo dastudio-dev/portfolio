@@ -455,13 +455,33 @@
       art.appendChild(pp);
     }
 
+    if (c.seg) {
+      var pre = document.createElement("pre");
+      pre.className = "msg"; pre.textContent = c.seg;
+      art.appendChild(pre);
+    }
+
     var acts = document.createElement("div");
     acts.className = "acts";
     if (c.wa) {
       var a = document.createElement("a");
-      a.className = "go"; a.href = "https://wa.me/" + c.wa; a.target = "_blank"; a.rel = "noopener";
+      a.className = "go";
+      a.href = "https://wa.me/" + c.wa + (c.seg ? "?text=" + encodeURIComponent(c.seg) : "");
+      a.target = "_blank"; a.rel = "noopener";
       a.textContent = "Abrir WhatsApp";
       acts.appendChild(a);
+    }
+    if (c.ig) {
+      var ai = document.createElement("a");
+      ai.href = "https://ig.me/m/" + c.ig; ai.target = "_blank"; ai.rel = "noopener";
+      ai.textContent = "Instagram";
+      acts.appendChild(ai);
+    }
+    if (c.seg) {
+      var bc = document.createElement("button");
+      bc.type = "button"; bc.textContent = "Copiar mensaje";
+      bc.addEventListener("click", function () { copiar(c.seg, bc); });
+      acts.appendChild(bc);
     }
     if (c.email) {
       var be = document.createElement("button");
